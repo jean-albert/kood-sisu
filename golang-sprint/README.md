@@ -1,2 +1,2 @@
-## Golang sprint
+## Golang Sprint
 Introduction to Go
