@@ -1,0 +1,3 @@
+# find.sh
+
+find . -name "a*" -o -name "*z" -o -name "z*a"

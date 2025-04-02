@@ -1,0 +1,12 @@
+package main
+
+import "fmt"
+
+func Abacus(a int, b int) int {
+	return a / b
+}
+
+func main() {
+	result := Abacus(8, 3)
+	fmt.Println(result)
+}
