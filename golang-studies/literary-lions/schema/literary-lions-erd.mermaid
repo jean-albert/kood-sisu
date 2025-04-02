@@ -1,0 +1,84 @@
+erDiagram
+    Users {
+        int id PK
+        text email
+        text username
+        text password_hash
+        datetime created_at
+        text bio
+        int fav_category FK
+    }
+
+    Categories {
+        int id PK
+        text name
+    }
+
+    Books {
+        int id PK
+        text name
+        text author
+        text genre
+    }
+
+    Posts {
+        int id PK
+        int user_id FK
+        int book_id FK
+        int category_id FK
+        text title
+        text content
+        datetime created_at
+        int like_count
+        int dislike_count
+        int comments_count
+    }
+
+    Ratings {
+        int id PK
+        int score
+        int book_id FK
+        int user_id FK
+        int post_id FK
+    }
+
+    Comments {
+        int id PK
+        int post_id FK
+        int user_id FK
+        text content
+        datetime created_at
+        int like_count
+        int dislike_count
+    }
+
+    PostLikes {
+        int id PK
+        int post_id FK
+        int user_id FK
+        boolean like
+    }
+
+    CommentLikes {
+        int id PK
+        int comment_id FK
+        int user_id FK
+        boolean like
+    }
+
+    Users ||--o{ Posts : "creates"
+    Users ||--o{ Comments : "writes"
+    Users ||--o{ Ratings : "rates"
+    Users ||--o{ PostLikes : "likes/dislikes"
+    Users ||--o{ CommentLikes : "likes/dislikes"
+    
+    Categories ||--o{ Posts : "categorizes"
+    
+    Books ||--o{ Posts : "referenced in"
+    Books ||--o{ Ratings : "receives"
+    
+    Posts ||--o{ Comments : "has"
+    Posts ||--o{ Ratings : "gets"
+    Posts ||--o{ PostLikes : "receives"
+    
+    Comments ||--o{ CommentLikes : "receives"
