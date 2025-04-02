@@ -1,0 +1,60 @@
+{{define "title"}}{{.Category}}{{end}}
+{{define "content"}}
+<div class="message">
+    {{.Message}}
+</div>
+<div class="category-meta">
+    <h1>Posts about {{.Category}}</h1>
+    <div class="search">
+        <form action="/category" method="get">
+            <input type="hidden" name="category_name" value="{{.Category}}">
+            <input type="search" name="search" id="search" placeholder="Search from {{.Category}}">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="sorting-options">
+        <a href="?category_name={{.Category}}&sort=recent&search={{.SearchTerm}}">Most Recent</a> |
+        <a href="?category_name={{.Category}}&sort=recent_comment&search={{.SearchTerm}}">Most Recently
+            Commented</a> |
+        <a href="?category_name={{.Category}}&sort=most_liked&search={{.SearchTerm}}">Most Liked</a>
+    </div>
+
+    {{ if .Logged}}
+    <div class="favorite-button">
+        <form action="/category?category_name={{.Category}}" method="post">
+            <input type="hidden" name="favorite" id="favorite" value="true">
+            <button type="submit">
+                <img src="static/star.png" alt="Add to favorites">
+                Make your favorite
+            </button>
+        </form>
+    </div>
+    {{end}}
+</div>
+
+{{ if .Posts }}
+{{range .Posts}}
+<div class="post-card">
+    <p class="post-title"><a href="/post?id={{.ID}}">{{.Title}}</a></p>
+    <div class="post-meta">
+        <span>Posted by: <span class="username">{{.Username}}</span></span><br>
+        <span class="post-date">{{.CreatedAtFormatted}}</span>
+    </div>
+    <div class="footer">
+        <div class="tags">
+            <span class="tag">{{.CategoryName}}</span>
+        </div>
+        <div class="likes">
+            <span><strong>Likes:</strong> {{.Likes}}</span>
+            <span><strong>Dislikes:</strong> {{.Dislikes}}</span>
+            <span><strong>Comments:</strong> {{.CommentNum}}</span>
+        </div>
+    </div>
+</div>
+{{end}}
+<a href="/" class="return-button">Return to all categories</a>
+{{else}}
+<h2>No posts found</h2>
+{{end}}
+{{end}}

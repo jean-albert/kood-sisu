@@ -1,0 +1,26 @@
+{{define "headerTemplate"}}
+
+<header>
+    <div class="logo">
+        <a href="/">
+            <img src="static/lionlogo.png" alt="Lion logo">
+        </a>
+    </div>
+    <div class="headertxt">
+        <h1>Literary Lions Forum</h1>
+    </div>
+</header>
+<div class="nav">
+    <ul>
+        <li><a href="/">Main page</a></li>
+        <li><a href="/createPost">Create a new post</a></li>
+        <li><a href="/createReview">Create a new book review</a></li>
+        {{if .Logged}}
+        <li><a href="/profile?user_id={{.UserSession.UserID}}">Profile page</a></li>
+        <li><a href="/logout">Logout</a></li>
+        {{else}}
+        <li><a href="/login">Log in</a></li>
+        {{end}}
+    </ul>
+</div>
+{{end}}

@@ -1,0 +1,48 @@
+{{define "title"}}Add {{.FormType}}{{end}}
+{{define "content"}}
+<div class="message">
+    {{.Message}}
+</div>
+<h1>Add {{.FormType}}</h1>
+<div class="newpost">
+    {{if .ShowBookForm}}
+    <form action="/addBookOrCategory" method="post">
+        <input type="hidden" name="form" value="book">
+        <div class="post-content">
+            <label for="book">Book:</label>
+            <input type="text" id="book" name="book" required><br><br>
+
+            <div class="authorselect">
+                <div>
+                    <label for="author">Select Author:</label>
+                    <select name="author" id="author">
+                        <option value="">---Select author---</option>
+                        {{range .Authors}}
+                        <option value="{{.}}">{{.}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <div>
+                    <label for="newauthor">Or Add a New Author:</label>
+                    <input type="text" id="newauthor" name="newauthor">
+                </div>
+            </div>
+            <label for="genre">Genre:</label>
+            <input type="text" id="genre" name="genre" required>
+        </div>
+        <button type="submit">Add a Book</button>
+    </form>
+    {{end}}
+
+    {{if .ShowCategoryForm}}
+    <form action="/addBookOrCategory" method="post">
+        <input type="hidden" name="form" value="category">
+        <div class="post-content">
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" required>
+        </div>
+        <button type="submit">Add a Category</button>
+    </form>
+    {{end}}
+</div>
+{{end}}

@@ -1,0 +1,24 @@
+{{define "title"}}Are you sure?{{end}}
+{{define "content"}}
+{{if .Message}}
+<div class="message">{{.Message}}</div>
+{{end}}
+<div class="delete-text">
+    <h1>Are you sure want to delete your user and profile?</h1>
+    <p>This will delete all your created content, including posts, comments and likes associated with them.</p>
+    <p>It's like you've never existed in this forum in the first place.</p>
+    <p>This action is irreversible!</p><br>
+</div>
+<div class="delete">
+    <form action="/deleteUser" method="POST">
+        <input type="hidden" name="user_id" value="{{.Profile.Username}}">
+        <label for="password">Type in your password to confirm deletion:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit" id="delete">Delete profile</button>
+    </form>
+    <form action="/profile?user_id={{.Profile.UserID}}" method="GET">
+        <input type="hidden" name="user_id" value="{{.Profile.UserID}}">
+        <button type="submit">Return to your profile</button>
+    </form>
+</div>
+{{end}}

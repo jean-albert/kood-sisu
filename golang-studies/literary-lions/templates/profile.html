@@ -1,0 +1,84 @@
+{{define "title"}}{{.Profile.Username}}{{end}}
+{{define "content"}}
+<div class="message">
+    {{.Message}}
+</div>
+<div class="edit">
+    {{ if eq .Username .Profile.Username }}
+    <a href="/editProfile?user_id={{.Profile.ID}}">Edit profile</a>
+    {{end}}
+</div>
+<div class="profile">
+    <div class="user-data">
+        <h1>{{.Profile.Username}}'s profile</h1><br>
+        <p><strong>Username:</strong> {{.Profile.Username}}</p>
+        <p><strong>Bio:</strong> {{.Profile.Bio}}</p>
+        <p><strong>Profile created:</strong> {{.FormattedCreatedAt}}</p>
+        {{ if eq .Profile.Username .Username }}
+        <p><strong>Email:</strong> {{.Profile.Email}}</p>
+        {{ end }}
+
+    </div>
+    <div class="favorited-category">
+        <h2>
+            <img src="/static/star.png" alt="Favorite" class="favorite-icon">
+            Favorite category:
+        </h2>
+        {{if .Profile.FavoriteCategory.Valid}}
+        <div>
+            <h3><a
+                    href="/category?category_name={{.Profile.FavoriteCategory.String}}">{{.Profile.FavoriteCategory.String}}</a>
+            </h3>
+            {{if eq .Username .Profile.Username}}
+            <form action="/profile?user_id={{.Profile.ID}}" method="post">
+                <input type="hidden" name="favorite" id="favorite" value="false">
+                <input class="edit" type="submit" value="Remove from favorites">
+            </form>
+            {{end}}
+        </div>
+        {{else}}
+        <p>No favorite category set.</p>
+        {{end}}
+    </div>
+
+    <div class="user-posts">
+        <h2 class="user-border">Posts by {{.Profile.Username}}:</h2>
+        {{ if .Posts }}
+        <ul>
+            {{ range .Posts }}
+            <li>
+                <div class="post-list">
+                    <h3><a href="/post?id={{.ID}}">{{.Title}}</a></h3>
+                    <p><strong>Likes:</strong> {{.Likes}} | <strong>Dislikes:</strong> {{.Dislikes}}</p>
+                    {{if eq $.Username .Username}}
+                    <div class="delete-button">
+                        <form action="/deletePost" method="POST">
+                            <input type="hidden" name="post_id" value="{{.ID}}">
+                            <button type="submit"><img src="static/trashcan.png" alt="Trash can">Delete post</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+            {{end}}
+            {{ end }}
+        </ul>
+        {{ else }}
+        <p>User has not made any posts.</p>
+        {{ end }}
+
+        <h2 class="user-border">Liked posts:</h2>
+        {{ if .LikedPosts }}
+        <ul>
+            {{ range .LikedPosts }}
+            <li>
+                <h3><a href="/post?id={{.ID}}">{{.Title}}</a></h3>
+                <p><strong>Likes:</strong> {{.Likes}} | <strong>Dislikes:</strong> {{.Dislikes}}</p>
+            </li>
+            {{ end }}
+        </ul>
+        {{ else }}
+        <p>User has not liked any posts.</p>
+        {{ end}}
+    </div>
+</div>
+{{end}}

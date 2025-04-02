@@ -1,0 +1,42 @@
+{{define "title"}}New Book review{{end}}
+{{define "content"}}
+<div class="message">
+    {{.Message}}
+    {{if .ErrMessage}}
+    <br>{{.ErrMessage}}
+    {{end}}
+</div>
+<h1>New Book review</h1>
+<div class="newpost">
+    <form action="/createReview" method="post">
+        <div class="post-content">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required><br><br>
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" required></textarea>
+        </div>
+        <div class="book-info">
+            <div class="book-name">
+                <label for="book_name">Book:</label>
+                <select name="bookID" id="bookID">
+                    {{range $author, $books := .BooksByAuthor}}
+                    <optgroup label="{{$author}}">
+                        {{range $books}}
+                        <option value="{{.ID}}">{{.Name}}</option>
+                        {{end}}
+                    </optgroup>
+                    {{end}}
+                </select>
+            </div>
+
+            <div class="book-score">
+                <label for="score">Rate (0-100):</label>
+                <input type="number" min="0" max="100" id="score" name="score" required>
+            </div>
+        </div>
+        <p>Didn't find a book you wish to review? Add a new book <a href="/addBookOrCategory?form=book">here!</a></p>
+        <br>
+        <button type="submit">Create review</button>
+    </form>
+</div>
+{{end}}

@@ -1,0 +1,55 @@
+{{define "title"}}Literary Lions{{end}}
+
+{{define "content"}}
+<h1>Posts by categories</h1>
+<div class="category-filter">
+    <form action="/category" method="GET">
+        <select name="category_name" onchange="this.form.submit()">
+            <option value="" disabled selected>Categories...</option>
+            {{range .Categories}}
+                <option value="{{.Name}}" {{if eq $.Category .Name}}selected{{end}}>
+                    {{.Name}}
+                </option>
+            {{end}}
+        </select>
+    </form>
+</div>
+<div class="sorting-options">
+    <a href="?sort=recent">Most Recent</a> |
+    <a href="?sort=recent_comment">Most Recently Commented</a> |
+    <a href="?sort=most_liked">Most Liked</a>
+</div>
+
+{{range .PostsByCategory}}
+<div class="category">
+    <h2>
+        {{if eq .CategoryName $.FavoriteCategory}}
+        <img src="/static/star.png" alt="Favorite" class="favorite-icon">
+        {{end}}
+        {{.CategoryName}}
+    </h2>
+    {{if .Posts}}
+    {{range .Posts}}
+    <div class="top-post">
+        <div class="post-info">
+            <p class="post-title"><a href="/post?id={{.ID}}">{{.Title}}</a></p>
+            <p>Posted by: <strong class="username">{{.Username}}</strong><span class="post-date">
+                    {{.CreatedAtFormatted}}</span></p>
+        </div>
+        <div class="likes">
+            <span><strong>Likes:</strong> {{.Likes}}</span>
+            <span><strong>Dislikes:</strong> {{.Dislikes}}</span>
+        </div>
+        <div class="commentnum">
+            <span><strong>Comments:</strong> {{.CommentNum}}</span>
+        </div>
+    </div>
+    {{end}}
+    <p class="category-link"><a href="/category?category_name={{.CategoryName}}">View all posts on {{.CategoryName}}
+            -></a></p>
+    {{else}}
+    <p>No posts in this category</p>
+    {{end}}
+</div>
+{{end}}
+{{end}}

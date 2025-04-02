@@ -1,0 +1,36 @@
+{{define "title"}}Edit Profile[{{end}}]
+{{define "content"}}
+{{if .Message}}
+<div class="message">{{.Message}}</div>
+{{end}}
+
+<h1>Editing {{.Profile.Username}}'s profile</h1>
+
+<div class="bio">
+    <form action="/editProfile" method="POST">
+        <div class="update">
+            <div>
+                <input type="hidden" name="user_id" value="{{.Profile.ID}}">
+                <label for="bio">Edit your profile bio:</label>
+                <textarea name="bio" id="bio" placeholder="Enter your bio">{{.Profile.Bio}}</textarea>
+            </div>
+            <div>
+                <label for="password">New password (leave empty to keep current password):</label>
+                <input type="password" id="new_password" name="new_password" placeholder="Enter new password">
+                <span>Your new password must contain an uppercase letter, a lowercase letter, a number and be between 5
+                    and 60 characters.</span>
+            </div>
+        </div>
+        <div class="verify-update">
+            <label for="current_password">Enter your password to update your profile:</label>
+            <input type="password" id="current_password" name="current_password" placeholder="Enter current password"
+                required>
+            <button type="submit">Update Profile</button>
+        </div>
+    </form>
+    <div class="user-buttons">
+        <a href="/deleteUser?user_id={{.Profile.ID}}">Delete User</a>
+        <a href="/profile?user_id={{.Profile.ID}}">Back to profile</a>
+    </div>
+</div>
+{{end}}

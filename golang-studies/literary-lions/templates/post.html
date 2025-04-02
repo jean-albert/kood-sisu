@@ -1,0 +1,114 @@
+{{define "title"}}{{.Post.Title}}{{end}}
+{{define "content"}}
+
+{{$loggeduser := .UserSession.Username}}
+{{$poster := .Post.Username}}
+<div class="post">
+    <h2 class="post-title">{{.Post.Title}}</h2>
+    <div class="post-meta">
+        <span>Posted by <strong class="username"><a
+                    href="/profile?user_id={{.User.ID}}">{{.Post.Username}}</a></strong></span>
+        <span class="post-date"> on {{.FormattedCreatedAt}}</span>
+    </div>
+    {{if .Post.BookName}}
+    <div class="book-data">
+        <div class="book">
+            <p><i>{{.Post.BookName}}</i></p>
+            <p> written by {{.Post.AuthorName}}</p>
+        </div>
+        <div class="rate">
+            <p><strong>Rating:</strong> {{if .Post.Score}}{{.Post.Score}}{{else}}No Rating{{end}}</p>
+            <p><strong>Average Rating:</strong> {{if .Post.AvgScore}}{{.Post.AvgScore}}{{else}}No Rating{{end}}
+            </p>
+            <p><strong>Genre:</strong> {{.Post.GenreName}}</p>
+        </div>
+    </div>
+    {{end}}
+    <div class="content">
+        <p>{{.Post.Content}}</p>
+    </div>
+    <div class="footer">
+        <div class="tags">
+            <span class="tag">{{.Post.CategoryName}}</span>
+        </div>
+        <div class="likes">
+            <span><strong>Likes:</strong> {{.Post.Likes}}</span>
+            <span><strong>Dislikes:</strong> {{.Post.Dislikes}}</span><br>
+        </div>
+    </div>
+
+    <div class="post-buttons">
+        {{if .Logged}}
+        <form action="/likePost" method="POST">
+            <input type="hidden" name="post_id" value="{{.Post.ID}}">
+            <button type="submit"><img src="static/thumbsup.png" alt="Thumbs up">Like</button>
+        </form>
+
+                <form action="/dislikePost" method="POST">
+                    <input type="hidden" name="post_id" value="{{.Post.ID}}">
+                    <button type="submit"><img src="static/thumbsdown.png" alt="Thumbs down">Dislike</button>
+                </form>
+                {{end}}
+            </div>
+        </div>
+
+<div class="comment-section">
+    <h2>Comments</h2>
+    {{if .Comments}}
+    <ul>
+        {{range .Comments}}
+        <li>
+            <div class="comment">
+                <strong class="username"><a href="/profile?user_id={{.UserID}}">{{.Username}}</a></strong>
+                <em>({{.CreatedAtFormatted}})</em>
+                <div class="content">
+                    <p>{{.Content}}</p>
+                </div>
+                <div class="comment-meta">
+                    <div class="likes">
+                        <p><strong>Likes:</strong> {{.Likes}}</p>
+                        <p><strong>Dislikes:</strong> {{.Dislikes}}</p>
+                    </div>
+                    <div class="comment-buttons">
+                        {{ if $.Logged }}
+                        <form action="/likeComment" method="POST">
+                            <input type="hidden" name="comment_id" value="{{.ID}}">
+                            <input type="hidden" name="post_id" value="{{$.Post.ID}}">
+                            <button type="submit"><img src="static/thumbsup.png" alt="Thumbs up"></button>
+                        </form>
+                        <form action="/dislikeComment" method="POST">
+                            <input type="hidden" name="comment_id" value="{{.ID}}">
+                            <input type="hidden" name="post_id" value="{{$.Post.ID}}">
+                            <button type="submit"><img src="static/thumbsdown.png" alt="Thumbs down"></button>
+                        </form>
+                        {{if or (eq .Username $loggeduser) (eq $loggeduser $poster)}}
+                        <form action="/deleteComment" method="POST">
+                            <input type="hidden" name="comment_id" value="{{.ID}}">
+                            <input type="hidden" name="post_id" value="{{$.Post.ID}}">
+                            <button type="submit"><img src="static/trashcan.png" alt="Trash can"></button>
+                        </form>
+                        {{end}}
+                        {{end}}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {{end}}
+    </ul>
+    {{else}}
+    <p>No comments yet.</p>
+    {{end}}
+
+    <div class="respond">
+        {{if .Logged}}
+        <form action="/comment" method="POST">
+            <input type="hidden" name="id" value="{{.Post.ID}}">
+            <input type="hidden" name="username" value="{{.Username}}">
+            <label for="comment">Comment:</label>
+            <textarea id="comment" name="comment" required></textarea>
+            <button type="submit">Add comment</button>
+        </form>
+        {{end}}
+    </div>
+</div>
+{{end}}

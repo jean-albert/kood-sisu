@@ -1,0 +1,24 @@
+{{define "title"}}Register{{end}}
+{{define "content"}}
+<div class="{{if .Success}}success{{else}}error{{end}} message">
+    {{.Message}}
+</div>
+  
+<div class="register">
+    <h2>Account registration</h2><br>
+
+    <form action="/register" method="POST">
+        <label for="email">Email address:</label>
+        <input type="email" id="email" name="email" placeholder="Enter email" required>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required>
+        <span>Your username must contain only letters and numbers and be between 4 and 51 characters.</span>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+        <span>Your password must contain an uppercase letter, a lowercase letter, a number and be between 5
+            and 60 characters.</span>
+        <button type="submit">Register</button>
+    </form>
+</div>
+<p>Already have an account? Login <a href="/login">here</a>.</p>
+{{end}}

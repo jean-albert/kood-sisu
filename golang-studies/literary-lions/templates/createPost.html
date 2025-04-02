@@ -1,0 +1,33 @@
+{{define "title"}}New Post{{end}}
+{{define "content"}}
+        <div class="message">
+            {{.Message}}
+            {{if .ErrMessage}}
+            <br>{{.ErrMessage}}
+            {{end}}
+        </div>
+        <h1>New Post</h1>
+        <div class="newpost">
+            <form action="/createPost" method="post">
+                <div class="post-content">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required><br><br>
+
+                    <label for="content">Content:</label>
+                    <textarea id="content" name="content" required></textarea>
+                </div>
+                <div class="book-tags">
+                    <label for="category">Category:</label>
+                    <select name="category" id="category">
+                        {{range .Categories}}
+                        <option value="{{.Name}}">{{.Name}}</option>
+                        {{end}}
+                    </select>
+                </div>
+                <p>Didn't find a suitable category? Add a new category <a
+                        href="/addBookOrCategory?form=category">here!</a></p>
+                <br>
+                <button type="submit">Create post</button>
+            </form>
+        </div>
+{{end}}
