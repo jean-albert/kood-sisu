@@ -1,0 +1,29 @@
+.team-links {
+    list-style: none;
+    padding: 0;
+    width: max-content;
+}
+
+.team-links li {
+    padding: 10px 20px;
+    margin: 5px 0;
+    border-radius: 4px;
+}
+
+.team-links li a {
+    text-decoration: none;
+    transition: normal;
+}
+
+.team-links li:hover > a {
+    font-weight: 700 !important;
+}
+
+.team-links span {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.team-links span:hover {
+    opacity: 1;
+}
