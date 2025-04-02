@@ -1,0 +1,739 @@
+:root {
+    --accentbg: deeppink;
+    --accenttxt: black;
+
+    --bodybg: lightyellow;
+    --bodytxt: black;
+
+    --headerbg: azure;
+    --headertxt: black;
+
+    --linkhover: gray;
+    --linkhoverbg: white;
+
+    --messagetxt: red;
+
+    --containerbg: beige;
+    --postbg: lemonchiffon;
+    --titletxt: darkorange;
+    --border: silver;
+
+    --contentbg: ivory;
+    --secondaccent: beige;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bodybg);
+    color: var(--bodytxt);
+    font-family: Arial, Arial, Helvetica, sans-serif;
+}
+
+header {
+    background-color: var(--headerbg);
+    color: var(--headertxt);
+    position: relative;
+    margin: 0px 200px;
+    height: 150px;
+}
+
+button {
+    background-color: var(--accentbg);
+    color: var(--accenttxt);
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    font-size: 16px;
+}
+
+.headertxt {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.headertxt h1 {
+    font-family: 'Arial Black';
+    font-size: 60px;
+}
+
+.headertxt h4 {
+    font-family: Courier New, Courier New, Courier, monospace;
+}
+
+.logo {
+    position: absolute;
+    left: 0px;
+}
+
+.logo img {
+    height: 150px;
+    width: auto;
+}
+
+.nav ul {
+    list-style-type: none;
+    margin: 0px 200px 20px;
+    padding: 0;
+    background-color: var(--accentbg);
+    overflow: hidden;
+}
+
+.nav li {
+    float: left;
+}
+
+.nav li a {
+    display: block;
+    color: var(--accenttxt);
+    text-align: center;
+    padding: 10px 10px;
+    text-decoration: none;
+}
+
+.nav li a:hover {
+    background-color: var(--linkhoverbg);
+    color: var(--linkhover);
+}
+
+.container {
+    margin: 0% 15%;
+    padding: 20px;
+    background-color: var(--containerbg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container h1 {
+    text-align: center;
+}
+
+.error {
+    color: var(--messagetxt);
+    text-align: center;
+}
+
+.message {
+    text-transform: capitalize;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.success {
+    color: green;
+}
+
+.error {
+    color: red;
+}
+
+.register h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.register span {
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+.register input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.category {
+    background-color: var(--postbg);
+    border: 2px solid var(--border);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.category h2 {
+    font-size: 20px;
+    padding-bottom: 5px;
+    text-align: left;
+}
+
+.top-post {
+    display: grid;
+    grid-template-columns: 50% 25% 25%;
+    width: 800px;
+    align-items: center;
+    line-height: 90%;
+    border-top: 1px solid var(--border)
+}
+
+.post-list {
+    display: grid;
+    grid-template-columns: auto 25% 25%;
+    width: 100%;
+    align-items: baseline;
+}
+
+.post-list h3 {
+    padding-right: 4px;
+}
+
+.delete-button {
+    text-align: right;
+}
+
+.category-meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    width: 800px;
+}
+
+.sorting-options {
+    margin-bottom: 15px;
+}
+
+.category-meta .sorting-options {
+    align-self: flex-start;
+}
+
+.favorite-button {
+    position: absolute;
+    right: 0;
+    top: 40%;
+    transform: translateY(-50%);
+}
+
+.favorite-button button {
+    background-color: transparent;
+    color: var(--titletxt);
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    transition: letter-spacing 0.2s ease, transform 0.2s ease;
+}
+
+.favorite-button button:hover {
+    letter-spacing: 2px;
+}
+
+.favorite-button button:active {
+    transform: scale(0.98);
+}
+
+.post-info .post-date {
+    font-size: 12px;
+}
+
+.post-info .username {
+    margin: 3px;
+}
+
+.top-post .likes,
+.top-post .commentnum {
+    text-align: right;
+}
+
+.category-link {
+    text-align: right;
+}
+
+.username,
+.username a,
+.username a:visited,
+.sorting-options a,
+.favorited-category a,
+.category-link a,
+.newpost a,
+.error a {
+    color: var(--accentbg);
+    text-decoration: none;
+}
+
+.post-card {
+    background-color: var(--postbg);
+    border: 1px, solid #e0e0e0;
+    border-radius: 8px;
+    padding: 5px 20px 20px;
+    margin: 0 10px 10px;
+    width: 800px;
+    max-height: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.search form {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.search button {
+    margin-left: 10px;
+}
+
+.post-title a,
+.user-posts a,
+.favorited-category a {
+    color: var(--titletxt);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.post-title a:hover,
+.user-posts a:hover,
+.username a:hover,
+.sorting-options a:hover,
+.favorited-category a:hover,
+.category-link a:hover,
+.newpost a:hover,
+.error a:hover {
+    text-decoration: underline;
+}
+
+.post-meta {
+    color: var(--bodytxt);
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.post-card .footer {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.tag {
+    background-color: var(--accentbg);
+    color: var(--accenttxt);
+    border-radius: 4px;
+    font-size: 15px;
+    padding: 4px 8px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.likes span {
+    margin-left: 15px;
+}
+
+.post {
+    background-color: var(--postbg);
+    border: 1px, solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px;
+    width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.post .post-title,
+.profile h1 {
+    color: var(--titletxt);
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.post .post-meta {
+    text-align: center;
+}
+
+.book-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px auto;
+    padding: 10px 30px;
+    border: 1px solid var(--border);
+    height: 100px;
+    width: 70%;
+    line-height: 60%;
+}
+
+.book-data .book {
+    text-align: center;
+    margin: 10px;
+}
+
+.book-data .rate {
+    text-align: left;
+    margin: 10px;
+}
+
+.post .content {
+    margin: 20px auto;
+}
+
+.content p {
+    padding: 10px;
+    max-width: 500px;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    margin-bottom: 20px;
+}
+
+.post .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+}
+
+.post .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    max-width: 50%;
+}
+
+.post .likes {
+    display: flex;
+    gap: 10px;
+    white-space: nowrap;
+    margin-right: 20px;
+}
+
+.post-buttons,
+.comment-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+}
+
+.post-buttons img,
+.comment-buttons img,
+.favorite-button img,
+.delete-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.post-buttons button,
+.comment-buttons button {
+    background-color: var(--secondaccent);
+    color: var(--accentbg);
+    margin: 5px;
+    padding: 5px;
+}
+
+.post-buttons button:hover,
+.comment-buttons button:hover {
+    background-color: var(--titletxt);
+    color: white;
+}
+
+.comment-section {
+    margin-top: 20px;
+    width: 70%;
+}
+
+.comment-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.comment-section .comment {
+    border-top: 1px solid var(--border);
+    padding: 10px;
+}
+
+.comment-section .comment-meta {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment .likes {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.respond {
+    margin-top: 20px;
+    padding: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.respond form,
+.register form,
+.login form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.respond label {
+    font-size: 18px;
+}
+
+.respond textarea {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    width: 100%;
+    font-size: 14px;
+    resize: none;
+    overflow: auto;
+}
+
+.newpost {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 1000px;
+}
+
+.post-content {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.book-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.book-tags {
+    margin-bottom: 20px;
+}
+
+.newpost input[type="text"],
+input[type="number"],
+input[type="search"],
+textarea,
+select {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    border-radius: 2px;
+    font-size: 16px;
+}
+
+#title {
+    width: 400px;
+}
+
+#content {
+    height: 150px;
+    width: 400px;
+    resize: none;
+    overflow: auto;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--accentbg);
+    outline: none;
+    box-shadow: 0 0 5px rgb(211, 84, 0.5);
+}
+
+.help-text {
+    display: block;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.authorselect {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.profile {
+    background-color: var(--postbg);
+    width: 70%;
+    padding: 20px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.user-data {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.user-data p {
+    white-space: pre;
+}
+
+.favorited-category div {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.user-posts,
+.edit,
+.favorited-category {
+    align-self: flex-start;
+    width: 100%;
+}
+
+.user-posts ul {
+    margin-bottom: 30px;
+}
+
+.user-border {
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border)
+}
+
+.edit a,
+form .edit,
+.bio a,
+.bio button,
+.delete-button button {
+    display: inline-block;
+    background-color: var(--accentbg);
+    color: var(--accenttxt);
+    padding: 7px;
+    width: fit-content;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.bio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.update div,
+.verify-update {
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.verify-update {
+    justify-content: center;
+    align-items: center;
+}
+
+.update {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.update span {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    white-space: pre-wrap;
+}
+
+.bio button {
+    align-self: center;
+}
+
+.bio textarea {
+    resize: none;
+    overflow: auto;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.bio input[type="password"] {
+    width: 250px;
+}
+
+.delete-text p {
+    text-align: start;
+}
+
+.delete {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.delete #delete {
+    background-color: grey;
+    color: black;
+    margin-left: 10px;
+}
+
+.favorite-icon {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.return-button {
+    display: inline-block;
+    background-color: var(--accentbg);
+    color: var(--accenttxt);
+    padding: 7px;
+    width: fit-content;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.return-button:hover {
+    background-color: var(--titletxt);
+    color: white;
+}
