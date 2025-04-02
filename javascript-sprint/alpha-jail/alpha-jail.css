@@ -1,0 +1,40 @@
+:root {
+    --orange: orange;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    overflow: hidden;
+}
+
+.zone {
+    flex: 1;
+    height: 100%;
+}
+
+.outside {
+    background-color: #f0f0f0;
+    width: 613px;  /* Set specific width for testing */
+}
+
+.inside {
+    background-color: #e0e0e0;
+    width: calc(100% - 613px);  /* Take remaining width */
+}
+
+.character {
+    position: fixed;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    background-color: white;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.character.trapped {
+    background-color: var(--orange);
+}
