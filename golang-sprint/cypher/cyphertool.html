@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title></title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <p>package main</p>
+<p>import (
+&quot;bufio&quot;
+&quot;fmt&quot;
+&quot;os&quot;
+&quot;strings&quot;
+)</p>
+<p>// Main, envoking other functions and giving result
+func main() {
+fmt.Println(&quot;Welcome to the Cypher Tool!&quot;)</p>
+<pre><code>toEncrypt, encoding, message := getInput()
+
+var result string
+switch encoding {
+case &quot;1&quot;:
+	if toEncrypt {
+		result = encrypt_rot13(message)
+	} else {
+		result = decrypt_rot13(message)
+	}
+case &quot;2&quot;:
+	if toEncrypt {
+		result = encrypt_reverse(message)
+	} else {
+		result = decrypt_reverse(message)
+	}
+case &quot;3&quot;:
+	if toEncrypt {
+		result = encrypt_rot5(message)
+	} else {
+		result = decrypt_rot5(message)
+	}
+default:
+	fmt.Println(&quot;Invalid cypher selection.&quot;)
+}
+fmt.Printf(&quot;Decrypted message using %s:\n%s\n&quot;, getEncodingName(encoding), result)
+</code></pre>
+<p>}</p>
+<p>// Get the input data required for the operation
+func getInput() (toEncrypt bool, encoding string, message string) {
+scanner := bufio.NewScanner(os.Stdin)</p>
+<pre><code>// Selection of encryption or decryption
+for {
+	fmt.Println(&quot;Select operation (1/2):&quot;)
+	fmt.Println(&quot;1. Encrypt.&quot;)
+	fmt.Println(&quot;2. Decrypt.&quot;)
+	scanner.Scan()
+	operation := strings.TrimSpace(scanner.Text())
+
+	if operation == &quot;1&quot; || operation == &quot;2&quot; {
+		toEncrypt = operation == &quot;1&quot;
+		break
+	} else {
+		fmt.Println(&quot;Invalid input.Please enter 1 or 2:&quot;)
+	}
+}
+
+// Selection of encryption/decryption method
+for {
+	fmt.Println(&quot;Select cypher (1/2/3):&quot;)
+	fmt.Println(&quot;1. ROT13.&quot;)
+	fmt.Println(&quot;2. Reverse.&quot;)
+	fmt.Println(&quot;3. ROT5.&quot;)
+	scanner.Scan()
+	encoding = strings.TrimSpace(scanner.Text())
+
+	if encoding == &quot;1&quot; || encoding == &quot;2&quot; || encoding == &quot;3&quot; {
+		break
+	} else {
+		fmt.Println(&quot;Invalid input. Please enter 1, 2 or 3:&quot;)
+	}
+}
+
+// Entering of the message
+for {
+	fmt.Println(&quot;Entre the message:&quot;)
+	scanner.Scan()
+	message = strings.TrimSpace(scanner.Text())
+
+	if len(message) &gt; 0 {
+		break
+	} else {
+		fmt.Println(&quot;Invalid mesage. Please enter a non-empty message.&quot;)
+	}
+}
+
+return toEncrypt, encoding, message
+</code></pre>
+<p>}</p>
+<p>// Encrypt the message with rot13
+func encrypt_rot13(s string) string {
+result := &quot;&quot;
+for _, char := range s {
+if char &gt;= 'a' &amp;&amp; char &lt;= 'z' {
+result += string((char-'a'+13)%26 + 'a')
+} else if char &gt;= 'A' &amp;&amp; char &lt;= 'Z' {
+result += string((char-'A'+13)%26 + 'A')
+} else {
+result += string(char)
+}
+}
+return result
+}</p>
+<p>// Encrypt the message with reverse
+func encrypt_reverse(s string) string {
+result := &quot;&quot;
+for _, char := range s {
+if char &gt;= 'a' &amp;&amp; char &lt;= 'z' {
+result += string('z' - (char - 'a'))
+} else if char &gt;= 'A' &amp;&amp; char &lt;= 'Z' {
+result += string('Z' - (char - 'A'))
+} else {
+result += string(char)
+}
+}
+return result
+}</p>
+<p>// Encrypt the message with rot5
+func encrypt_rot5(s string) string {
+result := &quot;&quot;
+for _, char := range s {
+if char &gt;= 'a' &amp;&amp; char &lt;= 'z' {
+result += string((char-'a'+5)%26 + 'a')
+} else if char &gt;= 'A' &amp;&amp; char &lt;= 'Z' {
+result += string((char-'A'+5)%26 + 'A')
+} else {
+result += string(char)
+}
+}
+return result
+}</p>
+<p>// Decrypt the message with rot13
+func decrypt_rot13(s string) string {
+return encrypt_rot13(s)
+}</p>
+<p>// Decrypt the message with reverse
+func decrypt_reverse(s string) string {
+return encrypt_reverse(s)
+}</p>
+<p>// Decrypt the message with rot5
+func decrypt_rot5(s string) string {
+result := &quot;&quot;
+for _, char := range s {
+if char &gt;= 'a' &amp;&amp; char &lt;= 'z' {
+result += string((char-'a'+21)%26 + 'a')
+} else if char &gt;= 'A' &amp;&amp; char &lt;= 'Z' {
+result += string((char-'A'+21)%26 + 'A')
+} else {
+result += string(char)
+}
+}
+return result
+}</p>
+<p>// Name of encoding method used
+func getEncodingName(encoding string) string {
+switch encoding {
+case &quot;1&quot;:
+return &quot;ROT13&quot;
+case &quot;2&quot;:
+return &quot;Reverse&quot;
+case &quot;3&quot;:
+return &quot;ROT5&quot;
+default:
+return &quot;Unknown&quot;
+}
+}</p>
+
+            
+            
+        </body>
+        </html>
