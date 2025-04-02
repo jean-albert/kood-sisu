@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Query Test</title>
+</head>
+<body>
+    <div id="test-id">Div with ID</div>
+    <p class="test-class">Paragraph with class</p>
+    <p class="test-class">Another paragraph with class</p>
+    <span data-example="value1">Span with attribute</span>
+    <span data-example="value2">Another span with attribute</span>
+    <a href="#">Link</a>
+
+    <script src="get-el.js"></script>
+    <script>
+        // Testing getElementsByTag
+        console.log('getElementsByTag("p"):', getElementsByTag('p'));
+
+        // Testing getElementsByClassName
+        console.log('getElementsByClassName("test-class"):', getElementsByClassName('test-class'));
+
+        // Testing getElementById
+        console.log('getElementById("test-id"):', getElementById('test-id'));
+        console.log('getElementById("non-existent-id"):', getElementById('non-existent-id'));
+
+        // Testing getElementsByAttribute with and without value
+        console.log('getElementsByAttribute("data-example", "value1"):', getElementsByAttribute('data-example', 'value1'));
+        console.log('getElementsByAttribute("data-example"):', getElementsByAttribute('data-example'));
+    </script>
+</body>
+</html>
