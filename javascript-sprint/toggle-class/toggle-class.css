@@ -1,0 +1,31 @@
+#content {
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: white;
+}
+
+#content.highlight {
+    background-color: yellow;
+}
+
+p.bold {
+    font-weight: bold;
+}
+
+p.italic {
+    font-style: italic;
+}
+
+p.underline {
+    text-decoration: underline;
+}
+
+.controls {
+    display: flex;
+    gap: 5px;
+}
+
+button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
