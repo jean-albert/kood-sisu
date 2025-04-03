@@ -1,0 +1,55 @@
+﻿/* Full-screen container */
+.next-race-display {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f5f5f5; /* Light gray background */
+    color: #333333; /* Dark gray text for better readability */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+/* Race name styling */
+.next-race-display h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333333; /* Dark gray for the race name */
+    margin-top: 20px; /* Space from the top */
+    margin-bottom: 20px;
+}
+
+/* Race details container */
+#raceDetails {
+    width: 80%;
+    max-width: 600px;
+    background-color: #ffffff; /* White background for contrast */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Driver list */
+.driver-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.driver-items li {
+    font-size: 1.2rem;
+    background-color: #e0e0e0; /* Light gray background for list items */
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.driver-items li:hover {
+    background-color: #d5d5d5; /* Slightly darker on hover */
+}

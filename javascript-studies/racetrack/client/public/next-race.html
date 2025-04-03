@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Race</title>    
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/next-race.css">
+    <script src="/socket.io/socket.io.js"></script>    
+    <script defer type="module" src="/js/index.js"></script>
+    <script defer type="module" src="/js/client-functions.js"></script>  
+    <script defer type="module" src="/js/interfaces/next-race.js"></script>
+    <script defer type="module" src="/js/dom-control.js"></script>
+</head>
+<body data-interface="next-race">
+    
+    <div id="detailDisplay" class="next-race-display">
+        <p><h2>Next Race: <span id="raceName"></span></h2> </p>
+        <div id="raceDetails">
+            <ul id="driverList" class="driver-items">
+                <!-- Driver list will be dynamically added here -->
+            </ul>
+        </div>
+        <div id="messageDisplay" class="hidden">
+            <p><h3>DRIVERS: PLEASE PROCEED TO PADDOCK.</h3></p>
+        </div>
+    </div>
+
+    <button id="fullscreenBtn">Go Fullscreen</button>
+</body>
+</html>

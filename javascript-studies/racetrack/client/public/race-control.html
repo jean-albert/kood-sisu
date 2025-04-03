@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Control</title>    
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/race-control.css">
+    <script src="/socket.io/socket.io.js"></script>    
+    <script defer type="module" src="/js/index.js"></script>
+    <script defer type="module" src="/js/interfaces/race-control.js"></script>
+    <script defer type="module" src="/js/client-functions.js"></script>  
+    <script defer type="module" src="/js/dom-control.js"></script>
+</head>
+<body data-interface="race-control">
+    
+    <!-- Authentication Container -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-container">
+            <h2 class="modal-title">Enter Race Control Access Key</h2>
+            <form id="authForm" class="auth-form">
+                <div class="form-group">
+                    <label for="accessKey" class="form-label">Access Key</label>
+                    <input type="password" id="accessKey" required class="form-input">
+                </div>
+                <button id="loginBtn" type="submit" class="btn-primary">Login</button>
+                <p id="authError" class="error-message hidden">Invalid access key. Please try again.</p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main Interface -->
+    <div id="mainContent" class="main-interface hidden">
+        <div id="raceDisplay">
+
+            <div id="detailDisplay" class="race-details">
+                <div class="modal-container">
+                    <h2>Session Name: <strong><span id="raceName"></span></strong></h2>
+        
+                    <h3>Drivers</h3>
+                    <ul id="driverList" class="driver-items">
+                    <!-- Drivers will be dynamically populated here -->
+                    </ul>
+                    
+                    <button id="startRaceBtn" class="btn-secondary">Start Race</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="buttonsContainer" class="btns-container">
+            <button id="safeBtn" class="safety-button">Safe</button>
+            <button id="hazardBtn" class="safety-button">Hazard</button>
+            <button id="dangerBtn" class="safety-button">Danger</button>
+            <button id="finishBtn" class="safety-button">Finish</button>
+        </div>
+
+        <div id="clearContainer" class="clear-container">
+            <button id="clearRaceBtn" class="btn-secondary">Clear Race</button>
+        </div>
+    </div>
+
+</body>
+</html>

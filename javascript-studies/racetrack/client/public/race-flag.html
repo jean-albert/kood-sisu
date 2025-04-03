@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Race Flag</title>    
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/socket.io/socket.io.js"></script>    
+    <script defer type="module" src="/js/index.js"></script>
+    <script defer type="module" src="/js/interfaces/race-flag.js"></script>       
+</head>
+<body data-interface="race-flag">
+    <div id="flagContainer" class="flag-container-stretched">
+        <img id="flag-img" class="flag-stretched" src="images/default.png">
+    </div>
+
+    <button id="fullscreenBtn" class="raceflag-fullbutton">Go Fullscreen</button>
+</body>
+</html>

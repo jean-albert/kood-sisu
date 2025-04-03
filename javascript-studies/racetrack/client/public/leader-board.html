@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>    
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/leader-board.css">
+    <script src="/socket.io/socket.io.js"></script>    
+    <script defer type="module" src="/js/index.js"></script>
+    <script defer type="module" src="/js/interfaces/leader-board.js"></script>
+    <script defer type="module" src="/js/client-functions.js"></script>  
+</head>
+<body data-interface="leader-board">
+    <section id="race-status">
+        <div id="statusContainer">
+            <div id="timerDisplay">Race not yet started</div>
+            <div id="flagContainer">
+                <img id="flag-img" src="images/default.png" alt="Race Flag">
+            </div>
+        </div>
+    </section>
+
+    <section id="leaderboard">
+        <h2>Leaderboard</h2>
+        <div id="lapTimesContainer">
+            <ul id="carList" class="leaderboard-list">
+                <!-- Cars and their lap times will be dynamically populated here -->
+            </ul>
+        </div>
+    </section>
+
+    <button id="fullscreenBtn">Go Fullscreen</button>
+</body>
+</html>

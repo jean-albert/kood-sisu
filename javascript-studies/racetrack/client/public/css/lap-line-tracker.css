@@ -1,0 +1,63 @@
+﻿.lapButtonsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.car-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.car-items li {
+    margin: 10px;
+    display: flex;  /* Ensure proper alignment for each item */
+    align-items: center;
+    justify-content: center;
+}
+
+.car-button { /* Target the class car-button specifically */
+    font-size: 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.car-button:hover {
+    background-color: #0056b3;
+}
+
+.car-button:active {
+    background-color: #003f7f;
+}
+
+@media (max-width: 768px) {
+    .car-button {
+        width: 200px;
+        height: 200px;
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .car-button {
+        width: 150px;
+        height: 150px;
+        font-size: 24px;
+    }
+}

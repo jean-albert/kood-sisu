@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Front Desk</title>    
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/front-desk.css">
+    <script src="/socket.io/socket.io.js"></script>    
+    <script defer type="module" src="/js/index.js"></script>
+    <script defer type="module" src="/js/client-functions.js"></script>
+    <script defer type="module" src="/js/interfaces/front-desk.js"></script>  
+    <script defer type="module" src="/js/dom-control.js"></script>         
+</head>
+<body data-interface="front-desk">
+    <!-- Authentication Container -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-container">
+            <h2 class="modal-title">Enter Front Desk Access Key</h2>
+            <form id="authForm" class="auth-form">
+                <div class="form-group">
+                    <label for="accessKey" class="form-label">Access Key</label>
+                    <input type="password" id="accessKey" required class="form-input">
+                </div>
+                <button id="loginBtn" type="submit" class="btn-primary">Login</button>
+                <p id="authError" class="error-message hidden">Invalid access key. Please try again.</p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main content -->
+    <div id="mainContent" class="main-interface hidden">
+        <h1>Welcome to the Front Desk</h1>
+    
+        <div class="race-management">
+            <!-- Left Column: Race List -->
+            <div class="race-list">
+                <h2>Upcoming Races</h2>
+                <button id="addRaceBtn" class="btn-primary">Add New Race</button>
+                <ul id="raceList" class="race-items">
+                    <!-- Race items will be dynamically added here -->
+                </ul>
+            </div>
+    
+            <!-- Right Column: Race Details -->
+            <div class="race-details-container">
+                <div id="detailDisplay" class="hidden-race-details hidden">
+                    <p><h2>Session Name: <span id="raceName"></span></h2> </p>
+                    <div id="raceDetails" class="driver-management">
+                        <h3>Drivers</h3>
+                        <ul id="driverList" class="driver-items">
+                            <!-- Driver list will be dynamically added here -->
+                        </ul>
+                        <button id="addDriverBtn" class="btn-secondary">Add Driver</button>
+                    </div>
+                    <button id="deleteRaceBtn" class="btn-danger">Delete Race</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

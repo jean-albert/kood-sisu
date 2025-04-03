@@ -1,0 +1,75 @@
+﻿/* Race status container to align timer and flag */
+#statusContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Space between elements */
+    margin-bottom: 20px;
+}
+
+/* Timer display styles */
+#timerDisplay {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    width: 400px;
+    background: #222;
+    color: #fff;
+    border-radius: 10px;
+    border: 2px solid #ffcc00;
+}
+
+/* Flag container styling */
+#flagContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Flag image styling */
+#flag-img {
+    height: 80px; 
+    width: auto;
+}
+
+#carList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+.leaderboard-item span {
+    margin-right: 10px;
+}
+
+.leaderboard-item .fastest-lap {
+    color: green;
+    font-weight: bold;
+}
+
+.leaderboard-item .current-lap {
+    color: #ff5733;
+    font-weight: bold;
+}
+
+/* Adding a rank column to the leaderboard */
+.leaderboard-item::before {
+    content: attr(data-rank);
+    font-weight: bold;
+    color: #ffcc00;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}

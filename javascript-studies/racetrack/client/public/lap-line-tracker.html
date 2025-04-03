@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lap Line Tracker</title>    
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/lap-line-tracker.css">
+    <script src="/socket.io/socket.io.js"></script>    
+    <script defer type="module" src="/js/index.js"></script>
+    <script defer type="module" src="/js/interfaces/lap-line-tracker.js"></script>
+    <script defer type="module" src="/js/client-functions.js"></script>       
+</head>
+<body data-interface="lap-line-tracker">
+    <!-- Authentication Container -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-container">
+            <h2 class="modal-title">Enter Lap Line Tracker Access Key</h2>
+            <form id="authForm" class="auth-form">
+                <div class="form-group">
+                    <label for="accessKey" class="form-label">Access Key</label>
+                    <input type="password" id="accessKey" required class="form-input">
+                </div>
+                <button id="loginBtn" type="submit" class="btn-primary">Login</button>
+                <p id="authError" class="error-message hidden">Invalid access key. Please try again.</p>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Main Interface -->
+    <div id="mainContent" class="main-interface hidden">
+        <h2>Track completed laps:</h2>
+        <div class="lapButtonsContainer">
+            <!-- empty -->
+            <ul id="lapButtonList" class="car-items">
+            <!-- Cars will be dynamically populated here -->
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

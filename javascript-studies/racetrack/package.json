@@ -1,0 +1,23 @@
+{
+  "name": "racetrack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "cross-env NODE_ENV=development node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@ngrok/ngrok": "^1.4.1",
+    "cross-env": "^7.0.3"
+  }
+}
