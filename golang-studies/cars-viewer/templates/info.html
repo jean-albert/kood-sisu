@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ .Model.Model.Name }}</title>
+    <link rel="stylesheet" href="/static/info.css">
+    <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>
+</head>
+
+<body>
+    <div id="page">
+        <header>
+            <h1>CARS VIEWER</h1>
+        </header>
+        <div class="container">
+            <img class="carimg" src="/api/img/{{ .Model.Model.Image }}" alt="{{ .Model.Model.Name }}">
+            <h2><strong>{{ .Model.Model.Name }}</strong></h2>
+            <div class="car-details">
+                <table>
+                    <tr>
+                        <th>Year:</th>
+                        <td>{{.Model.Model.Year}}</td>
+                        <th colspan="2" class="specs">Specifications:</th>
+                    </tr>
+                    <tr>
+                        <th>Manufacturer:</th>
+                        <td>{{.Model.Manufacturer.Name}}</td>
+                        <th>Engine:</th>
+                        <td>{{.Model.Model.Specifications.Engine}}</td>
+                    </tr>
+                    <tr>
+                        <th>Founding year:</th>
+                        <td>{{.Model.Manufacturer.FoundingYear}}</td>
+                        <th>Horsepower:</th>
+                        <td>{{.Model.Model.Specifications.Horsepower}}</td>
+                    </tr>
+                    <tr>
+                        <th>Country:</th>
+                        <td>{{.Model.Manufacturer.Country}}</td>
+                        <th>Transmission:</th>
+                        <td>{{.Model.Model.Specifications.Transmission}}</td>
+                    </tr>
+                    <tr>
+                        <th>Category:</th>
+                        <td>{{.Model.Category.Name}}</td>
+                        <th>Drivetrain:</th>
+                        <td>{{.Model.Model.Specifications.Drivetrain}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="back-container">
+                <a class="button" href="http://localhost:8080/">Main page</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="/static/search.css">
+    <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>
+</head>
+
+<body>
+    <div id="page">
+        <header>
+            <h1>CARS VIEWER</h1>
+        </header>
+        <div class="content">
+            <h1>Search Results:</h1>
+            <!-- Store the criteria from the search form in mainpage -->
+            <form action="/search" method="post">
+                <input type="hidden" name="manufacturer" value="{{ .PreviousSearch.Manufacturer }}">
+                <input type="hidden" name="category" value="{{ .PreviousSearch.Category }}">
+                <input type="hidden" name="country" value="{{ .PreviousSearch.Country }}">
+                <input type="hidden" name="drivetrain" value="{{ .PreviousSearch.Drivetrain }}">
+                <input type="hidden" name="engine" value="{{ .PreviousSearch.Engine }}">
+                <input type="hidden" name="transmission" value="{{ .PreviousSearch.Transmission }}">
+                <input type="hidden" name="valueMinYear" value="{{ .PreviousSearch.ValueMinYear }}">
+                <input type="hidden" name="valueMaxYear" value="{{ .PreviousSearch.ValueMaxYear }}">
+                <input type="hidden" name="valueMinHorsepower" value="{{ .PreviousSearch.ValueMinHorsepower }}">
+                <input type="hidden" name="valueMaxHorsepower" value="{{ .PreviousSearch.ValueMaxHorsepower }}">
+
+                <label for="sortingMethod">Sort by:</label>
+                <select id="sortingMethod" name="sortingMethod">
+                    <option value="" {{if eq .PreviousSearch.SortingMethod ""}}selected{{end}}>Default</option>
+                    <option value="A-to-Z" {{if eq .PreviousSearch.SortingMethod "A-to-Z"}}selected{{end}}>Alphabetical (Models from A-to-Z)</option>
+                    <option value="Z-to-A" {{if eq .PreviousSearch.SortingMethod "Z-to-A"}}selected{{end}}>Alphabetical (Models from Z-to-A)</option>
+                    <option value="year-ascending" {{if eq .PreviousSearch.SortingMethod "year-ascending"}}selected{{end}}>Year (Oldest to Newest)</option>
+                    <option value="year-descending" {{if eq .PreviousSearch.SortingMethod "year-descending"}}selected{{end}}>Year (Newest to Oldest)</option>
+                    <option value="horsepower-ascending" {{if eq .PreviousSearch.SortingMethod "horsepower-ascending"}}selected{{end}}>Horsepower (Ascending)</option>
+                    <option value="horsepower-descending" {{if eq .PreviousSearch.SortingMethod "horsepower-descending"}}selected{{end}}>Horsepower (Descending)</option>
+                </select>
+                <br><br>
+                <button type="submit" class="submit-button">Sort</button>
+            </form>
+            {{if .Message}}
+            <input type="checkbox" id="modal-toggle" checked hidden>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <p>{{ .Message }}</p>
+                    <label for="modal-toggle" class="close-button">Close</label>
+                </div>
+            </div>
+            {{end}}
+            {{ if .Results }}
+            <form action="/compare" method="POST">
+                <div class="cards-container">
+                    {{ range .Results }}
+                    <div class="card">
+                        <input type="checkbox" id="{{.Model.ID}}" name="comparename" value="{{.Model.ID}}">
+                        <label for="{{.Model.ID}}">
+                            <a href="http://localhost:8080/info?id={{ .Model.ID }}"><img src="/api/img/{{ .Model.Image }}" alt="{{ .Model.Name }}"></a>
+                            <div class="container">
+                                <h4><b>{{ .Model.Name }}</b></h4>
+                                <p>Year: {{ .Model.Year }}</p>
+                                <p>Manufacturer: {{ .Manufacturer.Name }}</p>
+                                <p>Founding year: {{ .Manufacturer.FoundingYear }}</p>
+                                <p>Country: {{ .Manufacturer.Country }}</p>
+                                <p>Category: {{ .Category.Name }}</p>
+                                <h5>Specifications:</h5>
+                                <ul>
+                                    <li>Engine: {{ .Model.Specifications.Engine }}</li>
+                                    <li>Horsepower: {{ .Model.Specifications.Horsepower }}</li>
+                                    <li>Transmission: {{ .Model.Specifications.Transmission }}</li>
+                                    <li>Drivetrain: {{ .Model.Specifications.Drivetrain }}</li>
+                                </ul>
+                            </div>
+                        </label>
+                    </div>
+                    {{ end }}
+                </div>
+                <br><br>
+                <input type="hidden" name="source" value="search.html">
+                <input type="hidden" name="manufacturer" value="{{ .PreviousSearch.Manufacturer }}">
+                <input type="hidden" name="category" value="{{ .PreviousSearch.Category }}">
+                <input type="hidden" name="country" value="{{ .PreviousSearch.Country }}">
+                <input type="hidden" name="drivetrain" value="{{ .PreviousSearch.Drivetrain }}">
+                <input type="hidden" name="engine" value="{{ .PreviousSearch.Engine }}">
+                <input type="hidden" name="transmission" value="{{ .PreviousSearch.Transmission }}">
+                <input type="hidden" name="valueMinYear" value="{{ .PreviousSearch.ValueMinYear }}">
+                <input type="hidden" name="valueMaxYear" value="{{ .PreviousSearch.ValueMaxYear }}">
+                <input type="hidden" name="valueMinHorsepower" value="{{ .PreviousSearch.ValueMinHorsepower }}">
+                <input type="hidden" name="valueMaxHorsepower" value="{{ .PreviousSearch.ValueMaxHorsepower }}">
+                <input type="hidden" name="sortingMethod" value="{{ .PreviousSearch.SortingMethod }}">
+                <input class="button" type="submit" value="Compare selected cars">
+            </form>
+            {{ else }}
+            <p>No results found.</p>
+            {{ end }}
+            <div class="back-container">
+                <a class="button" href="/">Main page</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

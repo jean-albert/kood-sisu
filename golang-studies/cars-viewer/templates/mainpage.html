@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cars Viewer</title>
+    <link rel="stylesheet" href="/static/mainpage.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>
+</head>
+<body>
+    <div id="page">
+      <header>
+         <h1>CARS VIEWER</h1>
+      </header>
+    <aside>
+        <form action="/" method="post">
+            <label for="sortingMethod">Sort by:</label>
+            <select id="sortingMethod" name="sortingMethod">
+                <option value="" {{if eq .SortingMethod ""}}selected{{end}}>Default</option>
+                <option value="A-to-Z" {{if eq .SortingMethod "A-to-Z"}}selected{{end}}>Alphabetical (Models from A-to-Z)</option>
+                <option value="Z-to-A" {{if eq .SortingMethod "Z-to-A"}}selected{{end}}>Alphabetical (Models from Z-to-A)</option>
+                <option value="year-ascending" {{if eq .SortingMethod "year-ascending"}}selected{{end}}>Year (Oldest to Newest)</option>
+                <option value="year-descending" {{if eq .SortingMethod "year-descending"}}selected{{end}}>Year (Newest to Oldest)</option>
+                <option value="horsepower-ascending" {{if eq .SortingMethod "horsepower-ascending"}}selected{{end}}>Horsepower (Ascending)</option>
+                <option value="horsepower-descending" {{if eq .SortingMethod "horsepower-descending"}}selected{{end}}>Horsepower (Descending)</option>
+            </select><br><br>
+            <button type="submit" class="submit-button">Sort</button>
+        </form>
+        
+        <div class="search-container">
+            <input type="checkbox" id="search-checkbox" class="search-checkbox">
+            <label for="search-checkbox" class="toggle-search">Toggle Search</label>
+            <div class="search">
+                <form action="/search" method="post">
+                    <!-- Search By Manufacturer -->
+                    <label for="manufacturer">Search By Manufacturer:</label>
+                    <select id="manufacturer" name="manufacturer">
+                        <option value="">Select Manufacturer</option>
+                        {{ range .Categories.Manufacturers }}
+                        <option value="{{ . }}">{{ . }}</option>
+                        {{ end }}
+                    </select><br>
+    
+                    <!-- Search By Category -->
+                    <label for="category">Search By Category:</label>
+                    <select id="category" name="category">
+                        <option value="">Select Category</option>
+                        {{ range .Categories.Categories }}
+                        <option value="{{ . }}">{{ . }}</option>
+                        {{ end }}
+                    </select><br>
+    
+                    <!-- Search By Country -->
+                    <label for="country">Search By Country:</label>
+                    <select id="country" name="country">
+                        <option value="">Select Country</option>
+                        {{ range .Categories.Countries }}
+                        <option value="{{ . }}">{{ . }}</option>
+                        {{ end }}
+                    </select><br>
+    
+                    <!-- Search By Drivetrain -->
+                    <label for="drivetrain">Search By Drivetrain:</label>
+                    <select id="drivetrain" name="drivetrain">
+                        <option value="">Select Drivetrain</option>
+                        {{ range .Categories.Drivetrains }}
+                        <option value="{{ . }}">{{ . }}</option>
+                        {{ end }}
+                    </select><br>
+    
+                    <!-- Search By Engine -->
+                    <label for="engine">Search By Engine:</label>
+                    <select id="engine" name="engine">
+                        <option value="">Select Engine</option>
+                        {{ range .Categories.Engines }}
+                        <option value="{{ . }}">{{ . }}</option>
+                        {{ end }}
+                    </select><br>
+    
+                    <!-- Search By Transmission -->
+                    <label for="transmission">Search By Transmission:</label>
+                    <select id="transmission" name="transmission">
+                        <option value="">Select Transmission</option>
+                        <option value="CVT">CVT</option>
+                        <option value="Automatic">Automatic</option>
+                        <option value="Manual">Manual</option>
+                    </select><br>
+    
+                    <!-- Search By Year -->
+                    <label for="valueMinYear">Search By Year:</label>
+                    <select id="year" name="year">
+                        <option value="">Select Year</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select><br><br>
+    
+                    <!-- Search By Horsepower --> 
+                    <label for="valueMinHorsepower">Search By Horsepower:</label>
+                    <input type="hidden" id="criteria-horsepower" name="criteria-horsepower" value="horsepower"><br>
+                    <input type="range" id="valueMinHorsepower" name="valueMinHorsepower" min="0" max="500" value="0" step="10" oninput="valueMinHorsepowerOutput.value = valueMinHorsepower.value">
+                    <output id="valueMinHorsepowerOutput" for="valueMinHorsepower">0</output><br>
+                    <input type="range" id="valueMaxHorsepower" name="valueMaxHorsepower" min="0" max="500" value="500" step="10" oninput="valueMaxHorsepowerOutput.value = valueMaxHorsepower.value">
+                    <output id="valueMaxHorsepowerOutput" for="valueMaxHorsepower">500</output><br>
+    
+                    <button type="submit">Search</button>
+                    <button type="reset">Reset</button>
+                </form>
+            </div>
+        </div>
+    </aside>
+    <br><br>
+    {{if .Message}}
+    <input type="checkbox" id="modal-toggle" checked hidden>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <p>{{ .Message }}</p>
+            <label for="modal-toggle" class="close-button">Close</label>
+        </div>
+    </div>
+    {{end}}
+    {{ if .CompositeModels }}
+    <form action="/compare" method="POST">
+        <div class="cards-container">
+            {{ range .CompositeModels }}
+            <div class="card">
+                    <input type="checkbox" id="{{.Model.ID}}" name="comparename" value="{{.Model.ID}}">
+                    <label for="{{.Model.ID}}">
+                        <img src="/api/img/{{ .Model.Image }}" alt="{{ .Model.Name }}">
+                        <h4><b><a href="http://localhost:8080/info?id={{ .Model.ID }}">{{ .Model.Name }}</a></b></h4>
+                        <div class="container">
+                        <p>Year: {{ .Model.Year }}</p>
+                    </label>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+        <br><br>
+        <input type="hidden" name="source" value="mainpage.html">
+        <input class="button" type="submit" value="Compare selected cars">
+    </form>
+    {{ else }}
+        <p>No models found.</p>
+    {{ end }}
+</body>
+</html>

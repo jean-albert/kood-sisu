@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Compare</title>
+   <link rel="stylesheet" href="/static/compare.css">
+   <link href='https://fonts.googleapis.com/css?family=Bungee Shade' rel='stylesheet'>
+</head>
+
+<body>
+   <div id="page">
+      <header>
+         <h1>CARS VIEWER</h1>
+      </header>
+      <div class="container">
+         <table>
+            <tr>
+               <th></th>
+               {{range .Model}}
+               <th><a href="/info?id={{ .Model.ID }}"><img class="carimg" src="/api/img/{{ .Model.Image }}" alt="{{ .Model.Name }}"></a></th>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Model</th>
+               {{range .Model}}
+               <td><b>{{ .Model.Name }}</b></td>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Year</th>
+               {{range .Model}}
+               <td>{{ .Model.Year }}</td>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Manufacturer</th>
+               {{range .Model}}
+               <td>{{ .Manufacturer.Name }}</td>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Country</th>
+               {{range .Model}}
+               <td>{{ .Manufacturer.Country }}</td>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Category</th>
+               {{range .Model}}
+               <td> {{ .Category.Name }}</td>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Engine</th>
+               {{range .Model}}
+               <td>{{ .Model.Specifications.Engine }}</td>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Horsepower</th>
+               {{range .Model}}
+               <td>{{ .Model.Specifications.Horsepower }}</td>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Transmission</th>
+               {{range .Model}}
+               <td>{{ .Model.Specifications.Transmission }}</td>
+               {{end}}
+            </tr>
+            <tr>
+               <th>Drivetrain</th>
+               {{range .Model}}
+               <td>{{ .Model.Specifications.Drivetrain }}</td>
+               {{end}}
+            </tr>
+         </table>
+         <br><br>
+         <div class="back-container">
+            <a class="button" href="http://localhost:8080/">Main page</a>
+         </div>
+      </div>
+   </div>
+</body>
+
+</html>

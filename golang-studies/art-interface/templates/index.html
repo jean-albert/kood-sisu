@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Interface</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Text-Based Art Decoder/Encoder</h1>
+
+        {{if .Message}}
+        <div class="message">{{.Message}}</div>
+        {{end}}
+
+        {{if .Result}}
+        <div class="result">
+            <h2>Generated Result</h2>
+            <pre>{{.Result}}</pre>
+        </div>
+        {{end}}
+
+        <div class="form-section">
+            <h2>Decode Text</h2>
+            <form action="/decoder" method="post" enctype="multipart/form-data">
+                <textarea name="inputText" rows="5" placeholder="Enter encoded text (leave empty to upload a file)"></textarea><br>
+                <label for="decodeFile">Or upload a file to decode:</label>
+                <input type="file" name="decodeFile"><br>
+                <button type="submit">Decode</button>
+            </form>
+        </div>
+
+        <div class="form-section">
+            <h2>Encode Text</h2>
+            <form action="/encoder" method="post" enctype="multipart/form-data">
+                <textarea name="encodeText" rows="5" placeholder="Enter text-based art (leave empty to upload a file)"></textarea><br>
+                <label for="encodeFile">Or upload a file to encode:</label>
+                <input type="file" name="encodeFile"><br>
+                <button type="submit">Encode</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
