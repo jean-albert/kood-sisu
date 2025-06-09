@@ -1,0 +1,249 @@
+// m/frontend/src/pages/ChatWindow.jsx
+
+import React, { useState, useEffect, useRef, Fragment } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import {
+  Container, Box, Typography, TextField, Button,
+  CircularProgress, List, Divider, Pagination, Avatar, Badge
+} from '@mui/material';
+import api from '../api/index';
+import { toast } from 'react-toastify';
+import { useChatState, useChatDispatch } from '../contexts/ChatContext';
+import ChatBubble from '../components/ChatBubble';
+import { useAuthState } from '../contexts/AuthContext';
+import useWebSocket from '../hooks/useWebSocket';
+
+/**
+ * ChatWindow.jsx
+ *
+ * Main chat window page. Handles chat creation, message history, sending messages,
+ * typing notifications, pagination, and real-time updates via WebSocket.
+ * Integrates with backend API and chat context for state management.
+ */
+
+const ChatWindow = () => {
+  const { user } = useAuthState();
+  const { chatId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { messages: allMessages, typingStatuses, chats, presence } = useChatState();
+  const { setMessages, sendMessage, sendTyping } = useChatDispatch();
+  const { subscribe, unsubscribe, sendRead } = useWebSocket();
+  const messagesEndRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [newMessage, setNewMessage] = useState('');
+  const [totalCount, setTotalCount] = useState(0);    
+  const pageSize = 10;                                 
+  const pageCount = Math.ceil(totalCount / pageSize);  
+  const messages = allMessages[chatId] || [];
+  const chatIdNum = Number(chatId);
+  const isTyping  = typingStatuses[chatIdNum];
+  const chat = chats.find(c => c.id === Number(chatId));
+  const otherUserId = chat?.otherUserID;
+  const otherUserName = chat?.otherUser?.firstName + ' ' + chat?.otherUser?.lastName;
+  const isOnline = Boolean(chat?.otherUserOnline);
+
+  useEffect(() => {
+    if (chatId === 'new') {
+      const otherUserID = new URLSearchParams(location.search).get('other_user_id');
+      if (!otherUserID) {
+        toast.error('other_user_id is not specified');
+        return;
+      }
+      api.post('/chats', { otherUserId: otherUserID })
+        .then(({ data }) => {
+          navigate(`/chat/${data.chatId}`, { replace: true });
+        })
+        .catch(() => {
+          toast.error('Failed to open chat');
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(true);
+      fetchMessages(page);
+    }
+  }, [chatId, page, location.search, navigate]);
+  const fetchMessages = async (p = 1) => {
+    try {
+    const { data } = await api.get(`/chats/${chatId}`, {
+        params: { page: p, limit: pageSize }
+      });
+      setTotalCount(data.totalCount);
+      setMessages(chatId, data.messages);
+    } catch {
+      toast.error('Error loading messages');
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    /**
+     * Subscribes to WebSocket updates for this chat on mount, unsubscribes on unmount.
+     */
+    if (chatId && chatId !== 'new') {
+      subscribe(chatId);
+      return () => unsubscribe(chatId);
+    }
+  }, [chatId, subscribe, unsubscribe]);
+  useEffect(() => {
+    /**
+     * Scrolls to the bottom of the message list when messages change.
+     */
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+  useEffect(() => {
+    if (!user || !chatId || chatId === 'new' || messages.length === 0) return;
+    const hasUnread = messages.some(
+      m => m.sender_id !== user.id && !m.read
+    );
+    if (hasUnread) {
+      sendRead(chatId);
+    }
+  }, [chatId, user, messages, sendRead]);
+  /**
+   * handleSend
+   * Sends a new message to the backend and via WebSocket, updates state.
+   * Handles optimistic UI update and error reporting.
+   */
+  const handleSend = async (e) => {
+    e.preventDefault();
+    const content = newMessage.trim();
+    if (!content) return;
+    try {
+      const { data: saved } = await api.post(
+        `/chats/${chatId}/messages`,
+        { content }
+      );
+      sendMessage(chatId, content);     
+    const normalized = {
+        ...saved,
+        sender_id: saved.senderId
+      };
+      setMessages(chatId, [...messages, normalized]);
+      setNewMessage('');
+    } catch {
+      toast.error('Error sending message');
+    }
+  };
+  /**
+   * handleChange
+   * Handles input change for new message, sends typing notifications with debounce.
+   */
+  const handleChange = (e) => {
+    setNewMessage(e.target.value);
+    sendTyping(chatId, true);
+    clearTimeout(window.typingTimeout);
+    window.typingTimeout = setTimeout(() => {
+      sendTyping(chatId, false);
+    }, 1500);
+  };
+  if (!user) {
+    return (
+      <Container sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Loading...
+        </Typography>
+        <CircularProgress />
+      </Container>
+    );
+  }
+  return (
+    <Container sx={{ mt: 4 }}>
+      <Typography variant="h4" gutterBottom>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Badge
+            color={isOnline ? 'success' : 'error'}
+            variant="dot"
+            overlap="circular"
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          >
+            <Avatar
+              src={chat?.otherUser?.photoUrl}
+              alt={otherUserName}
+              sx={{ width: 40, height: 40 }}
+            >
+              {!chat?.otherUser?.photoUrl && '👤'}
+            </Avatar>
+          </Badge>
+          {otherUserName || `Chat ${chatId}`}
+        </Box>
+      </Typography>
+      
+      <Box sx={{
+        border: '1px solid #ccc',
+        borderRadius: 2,
+        height: '60vh',
+        overflowY: 'auto',
+        p: 2,
+        mb: 2
+      }}>
+        {loading || chatId === 'new' ? (
+          <Box sx={{ textAlign: 'center', mt: 2 }}>
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+             <List>
+          {messages.map(msg => (
+            msg && msg.id ? (
+              <Fragment key={msg.id}>
+                <ChatBubble
+                  message={msg}
+                  isOwn={msg.sender_id === user.id}
+                />
+                <Divider component="li" />
+              </Fragment>
+            ) : null
+          ))}
+         {isTyping && (
+        <Typography variant="body2" color="textSecondary" sx={{ mb: 1, fontStyle: 'italic' }}>
+          User is typing...
+        </Typography>
+      )}
+        </List>
+
+        {pageCount > 1 && (
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+            <Pagination
+              count={pageCount}
+              page={page}
+              onChange={(_, newPage) => {
+                setPage(newPage);
+                setLoading(true);
+                fetchMessages(newPage);
+              }}
+              color="primary"
+            />
+          </Box>
+        )}
+
+        <div ref={messagesEndRef} />
+          </>
+        )}
+      </Box>
+      {chatId !== 'new' && (
+        <Box
+          component="form"
+          onSubmit={handleSend}
+          sx={{ display: 'flex', gap: 1 }}
+        >
+          <TextField
+            label="New message"
+            value={newMessage}
+            onChange={handleChange}
+            fullWidth
+            multiline
+            rows={2}
+          />
+          <Button variant="contained" type="submit">
+            Send
+          </Button>
+        </Box>
+      )}
+    </Container>
+  );
+};
+export default ChatWindow;
