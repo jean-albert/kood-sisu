@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"> <!-- Translated lang attribute to English -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Frontend-framework demo</title>
+  <base href="/">
+    <!-- Asynchronously load main CSS -->
+  <link
+    rel="preload"
+    href="example/styles.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="example/styles.css">
+  </noscript>
+  <!-- Apple touch icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <!-- Favicons -->
+  <link rel="icon"            sizes="32x32"    href="/favicon-32x32.png">
+  <link rel="icon"            sizes="16x16"    href="/favicon-16x16.png">
+  <link rel="manifest"                    href="/site.webmanifest">
+  <link rel="shortcut icon"               href="/favicon.ico">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Import Map should go before importing modules -->
+  <script type="importmap">
+    {
+      "imports": {
+        "framework/": "../framework/",
+        "example/": "./"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <button onclick="navigateTo('/dashboard')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">📊</span> Dashboard</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list"> 🧩 🗂️ 🧭 🌐 🖼️<br>
+  All modules ⚡ 📝 ⚙️ 💾 🛠️ 💤</span>
+          
+        </span>
+      </button>
+      <button onclick="navigateTo('/theme-switcher')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">🌓</span> Theme Switcher</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🗂️ ⚙️ 💾</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/weather')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">☀️</span> Weather Widget</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🗂️ 🌐 ⚡ 🖼️ 📝</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/time-tracker')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">⏱️</span> Time Tracker</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🗂️</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/chat')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">💬</span> WebSocket Chat</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🗂️ 🖼️</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/task-manager')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">📋</span> Task Manager</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🗂️ ⚡</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/api-demo')">
+        <span class="sidebar-label">🌐 API Demo</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🌐 🖼️</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/dom-utils-demo')">
+        <span class="sidebar-label">🖼️ DOM Utils Demo</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🖼️ ⚡</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/events-demo')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">⚡</span> Events Demo</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">⚡ 🖼️</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/performance')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">🚀</span> Performance</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🗂️ 💤</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/form-demo')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">📝</span> Form Demo</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🌐 🖼️ ⚡</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/icons')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">🎨</span> Icons Demo</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🖼️ 🗂️ ⚡ 💤</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+      <button onclick="navigateTo('/file-progress')">
+        <span class="sidebar-label"><span class="sidebar-demo-icon">📁</span> Download Progress</span>
+        <span class="emoji-block">
+          <span class="module-emoji-list">🌐 🗂️</span>
+          <span class="infra-emoji-list"><span class="infra-label">Infra:</span> 🧩 🧭 ⚙️  🛠️</span>
+        </span>
+      </button>
+    </aside>
+    <div class="main-content">
+      <div class="header-row">
+        <button class="home-btn" onclick="navigateTo('/', event)">🏠 Home</button>
+        <button id="theme-modal-btn" class="home-btn" title="Switch theme">🌓 Switch <span id="theme-indicator" class="theme-indicator-circle"></span></button>
+        <h1>Frontend-FrameWork Demo</h1>
+      </div>
+      <main id="app"></main>
+      <header>
+        <section class="modules-list-section">
+          <h2>MODULES IN USE:</h2>
+            <div class="modules-list-grid">
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">🧩</span>
+                <span class="module-title">Components</span>
+              </div>
+              <span class="module-desc">defineComponent() — reusable components</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">🗂️</span>
+                <span class="module-title">State</span>
+              </div>
+              <span class="module-desc">setState()/getState()/subscribe() — state management</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">🧭</span>
+                <span class="module-title">Router</span>
+              </div>
+              <span class="module-desc">navigateTo() — navigation & URL management</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">🌐</span>
+                <span class="module-title">API</span>
+              </div>
+              <span class="module-desc">getData() — HTTP requests to external services</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">🖼️</span>
+                <span class="module-title">DOM</span>
+              </div>
+              <span class="module-desc">createElement()/addClass()/removeClass() — DOM manipulation</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">⚡</span>
+                <span class="module-title">Events</span>
+              </div>
+              <span class="module-desc">delegateEvent()/onEvent() — event delegation</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">📝</span>
+                <span class="module-title">Logger</span>
+              </div>
+              <span class="module-desc">Logger.info/warn/error — logging</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">⚙️</span>
+                <span class="module-title">Config</span>
+              </div>
+              <span class="module-desc">Config — centralized configuration</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">💾</span>
+                <span class="module-title">PersistentState</span>
+              </div>
+              <span class="module-desc">initPersistentState() — autosave</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">🛠️</span>
+                <span class="module-title">Utils</span>
+              </div>
+              <span class="module-desc">request() — advanced HTTP requests</span>
+            </div>
+            <div class="module-list-item">
+              <div class="module-header">
+                <span class="module-icon">💤</span>
+                <span class="module-title">Lazy Rendering</span>
+              </div>
+              <span class="module-desc">lazyMount(), lazyImageLoader() — mount widgets and load images only when visible</span>
+            </div>
+          </div>
+          <br>
+          <div class="modules-legend">
+            📌 Module Key. Each component lists the modules it uses.<br>
+            Infra: structure modules are used implicitly and marked separately.
+          </div>
+        </section>
+      </header>
+    </div>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- Main application script -->
+  <script type="module" src="example/main.js"></script>
+  <div id="theme-toast" style="display:none;position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:12px 24px;border-radius:8px;z-index:9999;">Theme changed!</div>
+</body>
+
+<footer>
+  <section class="icons-demo">
+    <!-- Section showing available icons -->
+    <h2>Our Icons</h2> <!-- Translated heading -->
+    <img loading="lazy" src="/favicon-16x16.png" alt="16×16">
+    <img loading="lazy" src="/favicon-32x32.png" alt="32×32">
+    <img loading="lazy" src="/android-chrome-192x192.png" alt="192×192">
+
+
+  </section>
+</footer>
+</html>

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "framework/*": ["framework/*"],
+        "example/*": ["example/*"],
+        "example/extensions/*": ["example/components/extra/*"]
+      }
+    },
+    "include": ["framework", "example"]
+  }
+  

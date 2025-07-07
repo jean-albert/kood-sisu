@@ -1,0 +1,28 @@
+# Node modules
+node_modules/
+
+# Логи
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+
+# Environment files
+.env
+
+# Build directories
+dist/
+build/
+
+# IDE and editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+
+# System files
+.DS_Store
+Thumbs.db

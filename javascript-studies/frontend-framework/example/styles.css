@@ -1,0 +1,780 @@
+/* ============================================================
+   1. Theme root variables
+   ============================================================ */
+:root {
+  --bg-color:   #ffffff;
+  --text-color: #000000;
+  --btn-bg:     #eeeeee;
+  --btn-text:   #000000;
+}
+
+/* These variables are overwritten by JS when the theme changes */
+
+/* ============================================================
+   2. Base page styles
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  height: 100%;
+}
+
+.page {
+  padding: 1rem;
+}
+
+/* ============================================================
+   3. Buttons
+   ============================================================ */
+button {
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  padding: 0.5em 1em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: filter .2s, transform .1s;
+}
+button:hover,
+button:focus {
+  filter: brightness(0.9);
+  transform: translateY(-1px);
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   4. IconDemo component: grid and icon card
+   ============================================================ */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.icon-card {
+  background: var(--btn-bg);
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.icon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.icon-card img {
+  display: block;
+  margin: 0 auto 8px;
+  width: 64px;
+  height: 64px;
+}
+.icon-card .icon-label {
+  font-size: 0.9em;
+  color: var(--text-color);
+}
+
+/* ============================================================
+   5. ThemeSwitcher component and custom palette
+   ============================================================ */
+.theme-switcher.card {
+  background: var(--btn-bg);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform .2s, box-shadow .2s;
+}
+.theme-switcher.card:hover {
+  transform: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.theme-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.theme-buttons button {
+  flex: 1;
+}
+.theme-buttons button.active {
+  outline: 2px solid var(--text-color);
+}
+
+/* Hide the palette by default; JS will show it when mode === 'custom' */
+.custom-palette {
+  display: none;
+}
+
+/* Two-column grid for the palette */
+.grid-2cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* Row for each variable: dot—label—input */
+.palette-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Circle showing the current color */
+.color-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid #aaa;
+  flex-shrink: 0;
+}
+
+/* Label text without extra "--" */
+.palette-item span {
+  /* flex: 1; */
+  font-size: 0.9em;
+  color: var(--text-color);
+}
+
+/* Color picker input */
+.palette-item input[type="color"] {
+  border: none;
+  width: 32px;
+  height: 32px;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+/* ============================================================
+   6. Extras: utilities
+   ============================================================ */
+/* Optional helper classes like .flex, .gap-x, .items-center, etc. can be added as needed */
+.flex {
+  display: flex;
+}
+.items-center {
+  align-items: center;
+}
+.gap-2 {
+  gap: 8px;
+}
+.gap-3 {
+  gap: 12px;
+}
+.gap-4 {
+  gap: 16px;
+}
+
+
+
+/* Круглый индикатор */
+.timer-visual {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.timer-bg {
+  /* fill: none;
+  stroke: var(--btn-bg); */
+  stroke-width: 10;
+}
+.timer-fg {
+  /* fill: none; */
+  stroke: var(--btn-text);
+  stroke-width: 10;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  stroke-dasharray: 283; /* ~2π·45 */
+  stroke-dashoffset: 283;
+  transition: stroke-dashoffset 0.5s linear;
+}
+.timer-text {
+  fill: var(--text-color);
+  font-size: 12px;
+  font-family: monospace;
+  user-select: none;
+}
+
+/* Пульсация */
+.timer-fg.pulse {
+  animation: pulse 1s infinite alternate;
+}
+@keyframes pulse {
+  to { stroke-width: 14; }
+}
+
+/* ===== BASE STYLES ===== */
+* { box-sizing: border-box; }
+body { font-family: Arial, sans-serif; line-height: 1.6; margin: 4px; padding: 4px; background: #f5f5f5; color: #333; }
+h1, h2, h3 { color: var(--text-color); }
+
+/* ===== MODULES, PANELS, CARDS ===== */
+.framework-info, .modules-panel, .demo-panel {
+  background: linear-gradient(135deg, #a89ee6 0%, #8e8cd8 100%);
+  color: #fff;
+  padding: 24px 18px 36px 18px;
+  border-radius: 18px;
+  margin: 0 4px 24px 4px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+}
+.modules-panel { margin-bottom: 32px; }
+.demo-panel { margin-top: 0; }
+.framework-info h2, .modules-panel h2, .demo-panel h2 {
+  color: #fff;
+  text-align: left;
+  font-size: 1.35em;
+  margin-bottom: 22px;
+  margin-top: 0;
+  letter-spacing: 0.02em;
+}
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+  margin-top: 0;
+}
+.module-card {
+  background: #f7f4fd;
+  border: 1.5px solid #e0d7fa;
+  border-radius: 14px;
+  padding: 24px 18px;
+  box-shadow: 0 2px 10px #0001;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;display: flex;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+  color: #222;
+  position: relative;
+  min-width: 320px;
+  min-height: 140px;
+  padding-bottom: 44px;
+}
+.module-card:hover {
+  background: #ede7fa;
+  border-color: #cfc2f2;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 24px #0002;
+}
+.module-icon { font-size: 2.2em; margin-right: 16px; flex-shrink: 0; }
+.module-title { font-weight: bold; font-size: 1.8em; margin-bottom: 2px; color: #222; }
+.module-desc { color: #555; font-size: 1em; }
+
+
+@media (max-width: 768px) {
+  .framework-info, .modules-panel, .demo-panel { padding: 14px 12px; }
+  .modules-grid { grid-template-columns: 1fr; gap: 6px; }
+  .module-card { padding: 8px 8px; }
+}
+
+/* ===== MODULES LIST ===== */
+.modules-list-section {
+  padding: 10px 0 10px 0;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  background: #f7f4fd;
+  width: 100%;
+  box-sizing: border-box;
+}
+.modules-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 8px;
+  width: 100%;
+  overflow-x: hidden;
+}
+.module-list-item {
+  padding: 0;
+  background: none;
+  border: none;
+  color: #4a3e6c;
+  font-size: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.module-list-item .module-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 0;
+}
+.module-list-item .module-icon {
+  font-size: 1.4em;
+  color: #7a6fd8;
+}
+.module-list-item .module-title {
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #4a3e6c;
+  margin-bottom: 0;
+}
+.module-list-item .module-desc {
+  color: #6d5fa7;
+  font-size: 0.97em;
+  margin-top: 2px;
+  white-space: normal;
+}
+@media (max-width: 900px) {
+  .modules-list-section,
+   #app {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+}
+
+/* ===== DEMO/COMPONENTS ===== */
+.page, .notifications, .chat-page, .form-demo, .file-progress, .queue-manager, .dom-utils-demo, .events-demo, .api-demo, .performance-dashboard, .time-tracker {
+  background: var(--card-bg) !important;
+  color: var(--text-color);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  scroll-behavior: smooth;
+  position: relative;
+}
+
+/* ===== WEATHER WIDGET ===== */
+.weather-widget { text-align: center; transition: all 0.3s ease; }
+.city-input-section { margin: 20px 0; }
+.city-input-section label { display: block; margin-bottom: 10px; color: #333; }
+.input-group { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+.city-input { padding: 8px 12px; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; background: white; color: #333; flex: 1; max-width: 300px; }
+.search-btn { padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; outline: none; user-select: none; }
+.search-btn:hover:not(:disabled) { background: #0056b3; }
+.search-btn:disabled { background: #ccc; cursor: not-allowed; }
+.popular-cities { margin: 20px 0; }
+.popular-cities p { margin-bottom: 10px; color: #666; font-size: 14px; }
+.city-buttons { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.city-btn { padding: 6px 12px; background: #f8f9fa; color: #333; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; font-size: 14px; transition: background-color 0.2s ease; outline: none; user-select: none; }
+.city-btn:hover:not(:disabled) { background: #e9ecef; }
+.city-btn:disabled { background: #f8f9fa; color: #ccc; cursor: not-allowed; }
+.weather-display {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all 0.35s cubic-bezier(.4,2,.6,1);
+}
+.weather-icon { font-size: 3em; margin-bottom: 10px; }
+.temperature { font-size: 2.5em; font-weight: bold; margin: 10px 0; color: var(--text-color); }
+.condition { font-size: 1.1em; color: var(--text-color); }
+.weather-widget.loading { opacity: 0.7; }
+.weather-widget.loading .city-btn { opacity: 0.6; cursor: not-allowed; }
+.weather-widget.loading .city-btn:hover { background: #f8f9fa; }
+
+.home-btn {
+  display: block;
+  margin: 0 auto 18px auto;
+  padding: 16px 32px;
+  font-size: 1.15em;
+  font-weight: bold;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #a89ee6 0%, #8e8cd8 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 12px #0002;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  letter-spacing: 0.03em;
+}
+.home-btn:hover {
+  background: linear-gradient(90deg, #8e8cd8 0%, #a89ee6 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 18px #0003;
+}
+
+/* ===== LAYOUT ===== */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 290px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #a89ee6 0%, #8e8cd8 100%);
+  border-right: 1.5px solid #e0d7fa;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 4px 4px 4px;
+  gap: 6px;
+}
+.main-content {
+  flex: 1;
+  min-width: 0;
+  margin: 1px;
+  padding: 8px 0 0 0;
+}
+.modules-list-section,
+#app {
+  padding-left: 32px;
+  padding-right: 32px;
+  margin-bottom: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.modules-list-grid {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+}
+
+/* ===== SIDEBAR BUTTONS ===== */
+.sidebar button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100px;
+  padding-left: 10px;
+  width: 100%;
+  background: #efe8fb;
+  border: none;
+  margin: 0;
+  text-align: left;
+  font-size: 1.3em;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  color: #5a4e7c;
+  font-weight: 500;
+  box-shadow: 0 2px 0px #0001;
+  position: relative;
+  z-index: 1;
+  outline: none;
+}
+.sidebar button:hover,
+.sidebar button.active {
+  background: linear-gradient(90deg, #8e8cd8 0%, #b4aceb 100%);
+  font-weight: 700;
+  box-shadow: 0 4px 18px #0002;
+}
+.sidebar .sidebar-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: flex;
+  align-items: flex-start;
+  gap: 3px;
+  font-size: 1.08em;
+  font-weight: 500;
+  margin-bottom: 36px;
+}
+.sidebar .sidebar-demo-icon {
+  display: flex;
+  font-size: 1.2em;
+  margin-right: 8px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.sidebar .emoji-block {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 40px;
+  font-size: 0.8em;
+  text-align: right;
+}
+
+.infra-label {
+  color: #888;
+  font-size: 0.9em;
+  font-weight: 500;
+  margin-right: 3px;
+}
+
+.sidebar .module-emoji-list,
+.sidebar .infra-emoji-list {
+  white-space: nowrap;
+  text-align: right;
+  display: block;
+}
+
+/* ===== HEADER ===== */
+.header-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 96px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  min-height: 20px;
+}
+.header-row .home-btn {
+  margin: 0;
+  font-size: 1.08em;
+  padding: 18px 18px;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #a89ee6 0%, #8e8cd8 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 12px #0002;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  letter-spacing: 0.03em;
+}
+.header-row .home-btn:hover {
+  background: linear-gradient(90deg, #8e8cd8 0%, #a89ee6 100%);
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 18px #0003;
+}
+/* ===== modules block ===== */
+.modules-list-section {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-x: auto;
+  box-sizing: border-box;
+  padding: 12px 12px 12px 12px;
+}
+.modules-list-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 12px 12px;
+  align-items: start;
+}
+.module-list-item .module-desc {
+  font-size: 1em;
+  margin-top: 4px;
+  color: #6d5fa7;
+  max-width: 180px;
+  white-space: normal;
+}
+
+/* ===== Key modules legend ===== */
+.modules-legend {
+  font-size: 0.93em;
+  color: #3525c3;
+  margin-bottom: 8px;
+  margin-top: 0;
+  opacity: 0.85;
+  display: block;
+}
+/* ===== MAIN CONTENT ===== */
+.main-content > * {
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-bottom: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Dashboard grid layout: всегда 2 колонки (2x2), на мобильных — 1 колонка */
+ .dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(400px, 1fr));
+  grid-template-rows: 1fr 1fr;
+  gap: 2.4rem;
+  padding: 0.7rem 0;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0 auto 2rem auto;
+}
+@media (max-width: 600px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, auto);
+    gap: 1.2rem;
+    padding: 1rem;
+  }
+}
+.dashboard-zone {
+  background: var(--bg-color) !important;
+  /* background: var(--card-bg) !important;*/
+  color: var(--text-color) !important;
+ 
+} 
+
+/* ===== USER-FRIENDLY DASHBOARD & WIDGETS STYLES ===== */
+
+/* === Единый стиль для всех кнопок приложения (только внутри контента) === */
+.page button,
+.task-manager button,
+.chat-page button,
+.time-tracker button,
+.dashboard-zone button,
+.task-actions button,
+.btn,
+.events-demo button,
+.dom-utils-demo button,
+.file-progress button,
+.form-demo button {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0.45em 1.1em;
+  margin: 0.15em 0.25em;
+  min-width: 110px;
+  max-width: 180px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  transition: background 0.15s, box-shadow 0.15s, color 0.15s;
+}
+.page button:hover,
+.task-manager button:hover,
+.chat-page button:hover,
+.time-tracker button:hover,
+.dashboard-zone button:hover,
+.task-actions button:hover,
+.btn:hover,
+.events-demo button:hover,
+.dom-utils-demo button:hover,
+.file-progress button:hover,
+.form-demo button:hover {
+  background: var(--card-bg);
+  color: var(--text-color);
+  box-shadow: 0 1px 4px 0 rgba(80, 80, 120, 0.08);
+}
+.page button:active,
+.task-manager button:active,
+.chat-page button:active,
+.time-tracker button:active,
+.dashboard-zone button:active,
+.task-actions button:active,
+.btn:active,
+.events-demo button:active,
+.dom-utils-demo button:active,
+.file-progress button:active,
+.form-demo button:active {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+}
+
+/* For mobile — buttons full width */
+@media (max-width: 900px) {
+  .page button,
+  .task-manager button,
+  .chat-page button,
+  .time-tracker button,
+  .dashboard-zone button,
+  .task-actions button,
+  .btn {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+}
+
+/* Remove duplicate rules for .task-actions, .task-manager, .chat-page, .time-tracker */
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+  margin: 0.3em 0 0.7em 0;
+  justify-content: flex-start;
+}
+
+/* Styles for Add Task — same as for other buttons */
+.task-manager .add-task-btn, .task-manager button.add-task-btn {
+  min-width: 110px;
+  max-width: 180px;
+  font-size: 1em;
+  padding: 0.45em 1.1em;
+}
+
+/* Weather Widget: all buttons use theme variables */
+.weather-widget button,
+.weather-widget .city-btn,
+.weather-widget .search-btn {
+  background: var(--btn-bg) !important;
+  color: var(--btn-text) !important;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0.45em 1.1em;
+  margin: 0.15em 0.25em;
+  min-width: 90px;
+  max-width: 180px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  transition: background 0.15s, box-shadow 0.15s, color 0.15s;
+}
+.weather-widget button:hover,
+.weather-widget .city-btn:hover,
+.weather-widget .search-btn:hover {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  box-shadow: 0 1px 4px 0 rgba(80, 80, 120, 0.08);
+}
+
+/* Background inside widgets and dashboard*/
+ .weather-widget,
+.dashboard-zone,
+.page,
+.notifications,
+.chat-page,
+.form-demo,
+.file-progress,
+.queue-manager,
+.dom-utils-demo,
+.events-demo,
+.api-demo,
+.performance-dashboard,
+.time-tracker {
+  background: var(--card-bg) !important;
+  color: var(--text-color);
+}
+ 
+/* Headers of widgets always contrast */ 
+.dashboard-zone h2,
+.weather-widget h2,
+.page h2,
+.task-manager h2,
+.chat-page h2,
+.form-demo h2,
+.file-progress h2,
+.time-tracker h2 {
+  color: var(--text-color) !important;
+}
+
+.modal-window {
+  background: var(--card-bg) !important;
+  color: var(--text-color, #fff) !important;
+  box-shadow: 0 8px 32px #0002;
+  opacity: 1 !important;
+}
+ 
