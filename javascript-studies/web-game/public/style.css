@@ -1,0 +1,467 @@
+/* file style.css */
+.floating-trunk {
+  position: absolute;
+  /* Removed will-change and transform to prevent conflicts with JavaScript animations */
+}
+
+body, html {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #4668e6;
+  color: white;
+  font-family: Arial, sans-serif;
+  /* Minimal size of the window for correct game display */
+  min-width: 800px;
+  min-height: 600px;
+}
+
+#joinScreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  z-index: 3000;
+  min-width: 320px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+
+#joinScreen input {
+  padding: 10px;
+  margin: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  width: 200px;
+}
+
+#joinScreen button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#gameScreen {
+  display: none;
+}
+.game-container {
+  position: relative;
+  aspect-ratio: 3/2;
+  width: 96vw;
+  max-width: 1200px;
+  height: auto;
+  max-height: 80vh;
+  margin: auto;
+  background: #4668e6;
+  border: 2px solid #444;
+  overflow: hidden;
+  box-sizing: border-box;
+  /* Explicitly hide scrollbars */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.game-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* HUD fixed on top of the window */
+.score-board {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  z-index: 2000;
+  background: rgba(173, 168, 168, 0.7);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #222;
+  max-width: 40vw;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.lives-indicator {
+  position: fixed;
+  top: 16px;
+  left: 24px;
+  z-index: 2000;
+  font-size: 22px;
+  color: #e53935;
+  background: rgba(255,255,255,0.1);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+.timer {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  font-size: 36px;
+  color: #fff;
+  background: rgba(0,0,0,0.1);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+/* Animations of appearance */
+.coin, .bonus, .player-ball {
+  position: absolute;
+  /* Removed will-change and transform to prevent conflicts with JavaScript animations */
+}
+
+.player-ball {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  word-wrap: break-word;
+  padding: 5px;
+  /* Removed will-change and transform to prevent conflicts with JavaScript animations */
+  user-select: none;
+}
+
+.player-name {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: -20px;
+  left: 0;
+  font-size: 12px;
+  box-shadow: #444;
+}
+
+/* === Modern styles for control buttons === */
+.game-controls {
+  margin-top: 5px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.game-controls button,
+.game-controls select {
+  padding: 7px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background: #fff;
+  color: #222;
+  min-width: 90px;
+  min-height: 36px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  outline: none;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+#startButton {
+  background: #4caf50;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .game-controls {
+    max-width: 100%;
+    gap: 6px 8px;
+  }
+  .game-controls button,
+  .game-controls select {
+    min-width: 80px;
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .game-controls {
+    gap: 4px 4px;
+  }
+  .game-controls button,
+  .game-controls select {
+    min-width: 70px;
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+}
+
+.game-controls button:disabled {
+  background: #e0e0e0;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.game-controls button:hover:not(:disabled),
+.game-controls select:hover {
+  background: #f0f0f0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.game-controls select {
+  background: #fff;
+  color: #222;
+  border: 1px solid #bbb;
+  padding: 8px 12px;
+  min-width: 60px;
+}
+
+.error-message {
+  color: #ff4444;
+  margin-top: 10px;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.icon-selector {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.icon-option {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.icon-option:hover {
+  border-color: #4caf50;
+}
+
+.icon-option.selected {
+  border-color: #4caf50;
+  background: rgba(76, 175, 80, 0.2);
+}
+
+.icon-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.player-ball img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.player-name {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: -20px;
+  left: 0;
+  font-size: 12px;
+}
+
+.collision-immune {
+  animation: blink 0.5s infinite alternate;
+  border: 5px solid gold;
+  /* Protective sphere effect */
+  box-shadow: 0 0 10px gold;
+}
+
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* Custom modal styles */
+.modal {
+  position: fixed;
+  z-index: 2000;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-content {
+  background: #222;
+  color: #fff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 250px;
+}
+.modal-content button {
+  margin: 10px 15px 0 15px;
+  padding: 8px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.player-ball.infected {
+  box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.7);
+  animation: infected-pulse 1s infinite alternate;
+  /* Ensure animation doesn't conflict with movement transforms */
+  transform-origin: center;
+}
+
+@keyframes infected-pulse {
+  from { box-shadow: 0 0 10px 3px rgba(255, 0, 0, 0.7); }
+  to   { box-shadow: 0 0 15px 5px rgba(255, 0, 0, 0.9); }
+}
+
+.floating-plus {
+  position: absolute;
+  color: #ffd700; /* bright gold */
+  font-size: 28px;
+  font-weight: bold;
+  pointer-events: none;
+  animation: floatUp 1.2s ease-out forwards;
+  z-index: 1000;
+  text-shadow: 1px 1px 4px #222;
+}
+@keyframes floatUp {
+  from { opacity: 1; transform: scale(1.4) translateY(0); }
+  to   { opacity: 0; transform: scale(1) translateY(-60px); }
+}
+
+.heart-fade {
+  animation: heartFadeOut 0.7s forwards;
+}
+@keyframes heartFadeOut {
+  from { opacity: 1; transform: scale(1); }
+  60% { opacity: 0.5; transform: scale(1.3) rotate(-20deg); }
+  to { opacity: 0; transform: scale(0.5) rotate(30deg); }
+}
+
+.coin-hud-float {
+  position: absolute;
+  z-index: 2000;
+  pointer-events: none;
+  animation: coinHudFloat 0.9s ease-out forwards;
+}
+@keyframes coinHudFloat {
+  from { opacity: 1; transform: scale(1.3) translateY(0); }
+  60%  { opacity: 1; transform: scale(1) translateY(-18px); }
+  to   { opacity: 0; transform: scale(0.8) translateY(-36px); }
+}
+
+/* Temporarily disabled shake animation to fix screen jitter
+.player-ball.shake {
+  animation: shake 0.5s;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-8px); }
+  80% { transform: translateX(8px); }
+  100% { transform: translateX(0); }
+}
+*/
+
+/* Media queries for small screens */
+@media (max-width: 600px) {
+  .game-container {
+    aspect-ratio: 1/1;
+  }
+  .score-board, .lives-indicator, .timer {
+    font-size: 12px !important;
+    padding: 4px 6px !important;
+    border-radius: 6px !important;
+  }
+  .score-board {
+    top: 6px !important;
+    right: 6px !important;
+    max-width: 60vw;
+  }
+  .lives-indicator {
+    top: 6px !important;
+    left: 6px !important;
+  }
+  .timer {
+    top: 6px !important;
+  }
+  .game-controls button, .game-controls select {
+    font-size: 12px;
+    padding: 4px 8px;
+    min-width: 54px;
+    min-height: 26px;
+  }
+  #joinScreen {
+    min-width: 200px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .score-board, .lives-indicator, .timer {
+    font-size: 10px !important;
+    padding: 2px 4px !important;
+    border-radius: 4px !important;
+  }
+  .game-controls button, .game-controls select {
+    font-size: 10px;
+    padding: 4px 6px;
+    min-width: 30px;
+    min-height: 18px;
+  }
+}
+
+#chat, .chat-container, .chat-box {
+  position: fixed !important;
+  right: 24px;
+  bottom: 24px;
+  z-index: 2100;
+  max-width: 320px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  border-radius: 8px;
+}
+
+
+#emojiBtn {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  margin-right: 4px;
+  cursor: pointer;
+}
+#emojiPicker {
+  position: absolute;
+  bottom: 100%;   
+  right: 0;
+  margin-bottom: 8px;  
+  z-index: 2000;
+  display: none;
+}
